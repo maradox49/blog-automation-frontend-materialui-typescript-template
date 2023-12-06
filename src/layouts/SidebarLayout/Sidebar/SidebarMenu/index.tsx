@@ -31,6 +31,8 @@ import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwo
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import { Language, Translate } from '@mui/icons-material';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -180,7 +182,6 @@ function SidebarMenu() {
   return (
     <>
       <MenuWrapper>
-
         <List
           component="div"
           subheader={
@@ -191,43 +192,47 @@ function SidebarMenu() {
         >
           <SubMenuWrapper>
             <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/management/blogs"
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Go to blog
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/management/languages"
-                  startIcon={<MmsTwoToneIcon />}
-                >
-                  Languages
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/management/dictionaries"
-                  startIcon={<MmsTwoToneIcon />}
-                >
-                  Dictionary
-                </Button>
-              </ListItem>
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to="/management/blogs"
+                      startIcon={<WidgetsIcon />}
+                    >
+                      Go to blog
+                    </Button>
+                  </ListItem>
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to="/management/languages"
+                      startIcon={<Language />}
+                    >
+                      Languages
+                    </Button>
+                  </ListItem>
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to="/management/dictionaries"
+                      startIcon={<Translate />}
+                    >
+                      Dictionary
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
             </List>
           </SubMenuWrapper>
         </List>
-        <List component="div">
+        {/* <List component="div">
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
@@ -506,7 +511,7 @@ function SidebarMenu() {
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List>
+        </List> */}
       </MenuWrapper>
     </>
   );

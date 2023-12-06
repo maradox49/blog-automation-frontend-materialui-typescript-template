@@ -62,7 +62,8 @@ function Sidebar() {
                 width: 52
               }}
             >
-              <Logo />
+              <img src="/static/images/logo/logo.svg" />
+              {/* <Logo /> */}
             </Box>
           </Box>
           <Divider
