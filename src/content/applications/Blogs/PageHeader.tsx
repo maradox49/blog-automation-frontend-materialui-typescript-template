@@ -1,6 +1,7 @@
 import { Typography, Button, Grid } from '@mui/material';
-
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Search } from '@mui/icons-material';
 
 function PageHeader() {
   const user = {
@@ -10,18 +11,23 @@ function PageHeader() {
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
-        <Typography variant="h3" component="h3" gutterBottom>
-          Blog Lists
+        <Typography variant="h2" component="h2" gutterBottom>
+          Blog Listing
         </Typography>
       </Grid>
       <Grid item>
-        <Button
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            startAdornment={<InputAdornment position="start"><Search color='primary'/></InputAdornment>}
+            placeholder='Search here'
+          />
+        {/* <Button
           sx={{ mt: { xs: 2, md: 0 } }}
           variant="contained"
           startIcon={<AddTwoToneIcon fontSize="small" />}
         >
           Search Input
-        </Button>
+        </Button> */}
       </Grid>
     </Grid>
   );

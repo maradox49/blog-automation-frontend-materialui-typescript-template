@@ -232,7 +232,7 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
-        {/* <List component="div">
+        <List component="div">
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
@@ -511,7 +511,7 @@ function SidebarMenu() {
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List> */}
+        </List>
       </MenuWrapper>
     </>
   );
