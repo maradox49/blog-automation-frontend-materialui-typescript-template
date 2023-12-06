@@ -20,6 +20,7 @@ import {
   TableContainer,
   Select,
   MenuItem,
+  Button,
   Typography,
   useTheme,
   CardHeader
@@ -114,7 +115,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
         </Box>
       )}
       {!selectedBulkActions && (
-        <Box>
+        <Box flex={1} p={2}>
           Recent Orders
         </Box>
       )}
@@ -204,32 +205,26 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Edit Order" arrow>
-                      <IconButton
+                    <FormControl sx={{
+                      width: "90px"
+                    }}>
+                      <InputLabel id="demo-simple-select-label"></InputLabel>
+                      <Select
+                        size='small'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        defaultValue={10}
                         sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
+                          textAlign: "left",
+                          "& fieldset": { border: 'none' },
                         }}
-                        color="inherit"
-                        size="small"
                       >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete Order" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <DeleteTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                        <MenuItem value={10}>
+                          Delete
+                        </MenuItem>
+                        <MenuItem value={20}>Edit</MenuItem>
+                      </Select>
+                    </FormControl>
                   </TableCell>
                 </TableRow>
               );
