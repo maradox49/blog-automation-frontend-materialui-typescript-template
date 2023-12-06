@@ -22,6 +22,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { Language, Person, Translate, Widgets } from '@mui/icons-material';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -60,9 +61,9 @@ const UserBoxDescription = styled(Typography)(
 
 function HeaderUserbox() {
   const user = {
-    name: 'Catherine Pike',
+    name: '@gracephilipse',
     avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Project Manager'
+    jobtitle: 'Super Admin'
   };
 
   const ref = useRef<any>(null);
@@ -79,7 +80,8 @@ function HeaderUserbox() {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        {/* <Avatar variant="rounded" alt={user.name} src={user.avatar} /> */}
+        <Person />
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
@@ -106,7 +108,8 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          {/* <Avatar variant="rounded" alt={user.name} src={user.avatar} /> */}
+          <Person />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
             <UserBoxDescription variant="body2">
@@ -116,21 +119,24 @@ function HeaderUserbox() {
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/management/profile/details" component={NavLink}>
-            <AccountBoxTwoToneIcon fontSize="small" />
-            <ListItemText primary="My Profile" />
+          <ListItem button to="/management/blogs" component={NavLink}>
+            {/* <AccountBoxTwoToneIcon fontSize="small" /> */}
+            <Widgets />
+            <ListItemText primary="Blogs" />
           </ListItem>
-          <ListItem button to="/dashboards/messenger" component={NavLink}>
-            <InboxTwoToneIcon fontSize="small" />
-            <ListItemText primary="Messenger" />
+          <ListItem button to="/management/languages" component={NavLink}>
+            {/* <InboxTwoToneIcon fontSize="small" /> */}
+            <Language />
+            <ListItemText primary="Languages" />
           </ListItem>
           <ListItem
             button
-            to="/management/profile/settings"
+            to="/management/dictionaries"
             component={NavLink}
           >
-            <AccountTreeTwoToneIcon fontSize="small" />
-            <ListItemText primary="Account Settings" />
+            {/* <AccountTreeTwoToneIcon fontSize="small" /> */}
+            <Translate />
+            <ListItemText primary="Dictionary" />
           </ListItem>
         </List>
         <Divider />
