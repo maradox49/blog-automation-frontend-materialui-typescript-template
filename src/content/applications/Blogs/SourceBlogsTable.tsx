@@ -1,6 +1,4 @@
 import { FC, ChangeEvent, useState } from 'react';
-import { format } from 'date-fns';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
   Tooltip,
@@ -10,6 +8,7 @@ import {
   InputLabel,
   Card,
   Checkbox,
+  Button,
   IconButton,
   Table,
   TableBody,
@@ -26,49 +25,49 @@ import {
 } from '@mui/material';
 
 import Label from 'src/components/Label';
-import { CryptoOrder, CryptoOrderStatus } from 'src/models/crypto_order';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
+import { BlogStatus, BlogType } from 'src/models/blog';
 
-interface RecentOrdersTableProps {
+interface SourceBlogsTable {
   className?: string;
-  cryptoOrders: CryptoOrder[];
+  blogs: BlogType[];
 }
 
 interface Filters {
-  status?: CryptoOrderStatus;
+  status?: BlogStatus;
 }
 
-const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
+const getStatusLabel = (blogStatus: BlogStatus): JSX.Element => {
   const map = {
     failed: {
-      text: 'Failed',
+      text: 'failed',
       color: 'error'
     },
-    completed: {
-      text: 'Completed',
+    publish: {
+      text: 'publish',
       color: 'success'
     },
     pending: {
-      text: 'Pending',
+      text: 'pending',
       color: 'warning'
     }
   };
 
-  const { text, color }: any = map[cryptoOrderStatus];
+  const { text, color }: any = map[blogStatus];
 
   return <Label color={color}>{text}</Label>;
 };
 
 const applyFilters = (
-  cryptoOrders: CryptoOrder[],
+  blogs: BlogType[],
   filters: Filters
-): CryptoOrder[] => {
-  return cryptoOrders.filter((cryptoOrder) => {
+): BlogType[] => {
+  return blogs.filter((blog) => {
     let matches = true;
 
-    if (filters.status && cryptoOrder.status !== filters.status) {
+    if (filters.status && blog.status !== filters.status) {
       matches = false;
     }
 
@@ -77,18 +76,18 @@ const applyFilters = (
 };
 
 const applyPagination = (
-  cryptoOrders: CryptoOrder[],
+  blogs: BlogType[],
   page: number,
   limit: number
-): CryptoOrder[] => {
-  return cryptoOrders.slice(page * limit, page * limit + limit);
+): BlogType[] => {
+  return blogs.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
-  const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
+const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
+  const [selectedBlogTypes, setSelectedBlogTypes] = useState<string[]>(
     []
   );
-  const selectedBulkActions = selectedCryptoOrders.length > 0;
+  const selectedBulkActions = selectedBlogTypes.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const [filters, setFilters] = useState<Filters>({
@@ -98,19 +97,19 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   const statusOptions = [
     {
       id: 'all',
-      name: 'All'
+      name: 'all'
     },
     {
-      id: 'completed',
-      name: 'Completed'
+      id: 'publish',
+      name: 'publish'
     },
     {
       id: 'pending',
-      name: 'Pending'
+      name: 'pending'
     },
     {
       id: 'failed',
-      name: 'Failed'
+      name: 'failed'
     }
   ];
 
@@ -127,28 +126,28 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     }));
   };
 
-  const handleSelectAllCryptoOrders = (
+  const handleSelectAllBlogTypes = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    setSelectedCryptoOrders(
+    setSelectedBlogTypes(
       event.target.checked
-        ? cryptoOrders.map((cryptoOrder) => cryptoOrder.id)
+        ? blogs.map((blog) => blog.id)
         : []
     );
   };
 
-  const handleSelectOneCryptoOrder = (
+  const handleSelectOneBlogType = (
     event: ChangeEvent<HTMLInputElement>,
-    cryptoOrderId: string
+    blogId: string
   ): void => {
-    if (!selectedCryptoOrders.includes(cryptoOrderId)) {
-      setSelectedCryptoOrders((prevSelected) => [
+    if (!selectedBlogTypes.includes(blogId)) {
+      setSelectedBlogTypes((prevSelected) => [
         ...prevSelected,
-        cryptoOrderId
+        blogId
       ]);
     } else {
-      setSelectedCryptoOrders((prevSelected) =>
-        prevSelected.filter((id) => id !== cryptoOrderId)
+      setSelectedBlogTypes((prevSelected) =>
+        prevSelected.filter((id) => id !== blogId)
       );
     }
   };
@@ -161,17 +160,17 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     setLimit(parseInt(event.target.value));
   };
 
-  const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
-  const paginatedCryptoOrders = applyPagination(
-    filteredCryptoOrders,
+  const filteredBlogTypes = applyFilters(blogs, filters);
+  const paginatedBlogs = applyPagination(
+    filteredBlogTypes,
     page,
     limit
   );
-  const selectedSomeCryptoOrders =
-    selectedCryptoOrders.length > 0 &&
-    selectedCryptoOrders.length < cryptoOrders.length;
-  const selectedAllCryptoOrders =
-    selectedCryptoOrders.length === cryptoOrders.length;
+  const selectedSomeBlogTypes =
+    selectedBlogTypes.length > 0 &&
+    selectedBlogTypes.length < blogs.length;
+  const selectedAllBlogTypes =
+    selectedBlogTypes.length === blogs.length;
   const theme = useTheme();
 
   return (
@@ -202,7 +201,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
               </FormControl>
             </Box>
           }
-          title="Recent Orders"
+          title="Source Blogs"
         />
       )}
       <Divider />
@@ -213,38 +212,39 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
               <TableCell padding="checkbox">
                 <Checkbox
                   color="primary"
-                  checked={selectedAllCryptoOrders}
-                  indeterminate={selectedSomeCryptoOrders}
-                  onChange={handleSelectAllCryptoOrders}
+                  checked={selectedAllBlogTypes}
+                  indeterminate={selectedSomeBlogTypes}
+                  onChange={handleSelectAllBlogTypes}
                 />
               </TableCell>
-              <TableCell>Order Details</TableCell>
-              <TableCell>Order ID</TableCell>
-              <TableCell>Source</TableCell>
-              <TableCell align="right">Amount</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Slug</TableCell>
+              <TableCell>Title</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right">Number</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedCryptoOrders.map((cryptoOrder) => {
-              const isCryptoOrderSelected = selectedCryptoOrders.includes(
-                cryptoOrder.id
+            {paginatedBlogs.map((blog) => {
+              const isBlogTypeSelected = selectedBlogTypes.includes(
+                blog.id
               );
               return (
                 <TableRow
                   hover
-                  key={cryptoOrder.id}
-                  selected={isCryptoOrderSelected}
+                  key={blog.id}
+                  selected={isBlogTypeSelected}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
-                      checked={isCryptoOrderSelected}
+                      checked={isBlogTypeSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneCryptoOrder(event, cryptoOrder.id)
+                        handleSelectOneBlogType(event, blog.id)
                       }
-                      value={isCryptoOrderSelected}
+                      value={isBlogTypeSelected}
                     />
                   </TableCell>
                   <TableCell>
@@ -255,10 +255,16 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderDetails}
+                      {blog.sourceId}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+
+                  <Typography variant="body2" color="text.secondary" noWrap>
+                      {blog.date.split(' ')[0]}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
+                      {blog.date.split(' ').slice(1,3).join(' ')}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -269,7 +275,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderID}
+                      {blog.slug}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -280,11 +286,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.sourceName}
+                      {blog.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {cryptoOrder.sourceDesc}
-                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    {getStatusLabel(blog.status)}
                   </TableCell>
                   <TableCell align="right">
                     <Typography
@@ -294,45 +300,19 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.amountCrypto}
-                      {cryptoOrder.cryptoCurrency}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {numeral(cryptoOrder.amount).format(
-                        `${cryptoOrder.currency}0,0.00`
-                      )}
+                      {blog.number}
                     </Typography>
                   </TableCell>
-                  <TableCell align="right">
-                    {getStatusLabel(cryptoOrder.status)}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Tooltip title="Edit Order" arrow>
-                      <IconButton
+                  <TableCell align="center">
+                      {
+                        parseInt(blog.id) % 2 ?
+                        <Button variant='contained'
                         sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
+                          width: "80%"
                         }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete Order" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <DeleteTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                         color='success' size='small'>Done</Button>:
+                        <Button variant='contained' color='error'  size='small'>Translate</Button>
+                      }
                   </TableCell>
                 </TableRow>
               );
@@ -343,7 +323,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
       <Box p={2}>
         <TablePagination
           component="div"
-          count={filteredCryptoOrders.length}
+          count={filteredBlogTypes.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}
@@ -356,11 +336,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
 };
 
 RecentOrdersTable.propTypes = {
-  cryptoOrders: PropTypes.array.isRequired
+  blogs: PropTypes.array.isRequired
 };
 
 RecentOrdersTable.defaultProps = {
-  cryptoOrders: []
+  blogs: []
 };
 
 export default RecentOrdersTable;
