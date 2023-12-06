@@ -186,7 +186,7 @@ function SidebarMenu() {
               disableRipple
               component={RouterLink}
               onClick={closeSidebar}
-              to="/management/transactions"
+              to="/management/blogs"
               startIcon={<BrightnessLowTwoToneIcon />}
             >
               Go to blog
@@ -197,7 +197,7 @@ function SidebarMenu() {
               disableRipple
               component={RouterLink}
               onClick={closeSidebar}
-              to="/management/transactions"
+              to="/management/languages"
               startIcon={<MmsTwoToneIcon />}
             >
               Languages
@@ -208,7 +208,7 @@ function SidebarMenu() {
               disableRipple
               component={RouterLink}
               onClick={closeSidebar}
-              to="/management/transactions"
+              to="/management/dictionaries"
               startIcon={<MmsTwoToneIcon />}
             >
               Dictionary

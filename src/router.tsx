@@ -27,6 +27,15 @@ const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 const Messenger = Loader(
   lazy(() => import('src/content/applications/Messenger'))
 );
+const Blogs = Loader(
+  lazy(() => import('src/content/applications/Blogs'))
+);
+const Languages = Loader(
+  lazy(() => import('src/content/applications/Languages'))
+);
+const Dictionaries = Loader(
+  lazy(() => import('src/content/applications/Dictionaries'))
+);
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
@@ -144,7 +153,19 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to="transactions" replace />
+        element: <Navigate to="Blogs" replace />
+      },
+      {
+        path: 'blogs',
+        element: <Blogs />
+      },
+      {
+        path: 'languages',
+        element: <Languages />
+      },
+      {
+        path: 'dictionaries',
+        element: <Dictionaries />
       },
       {
         path: 'transactions',
