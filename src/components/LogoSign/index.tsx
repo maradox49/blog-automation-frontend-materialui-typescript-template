@@ -104,7 +104,7 @@ function Logo() {
     >
       <LogoWrapper to="/management/blogs">
 
-        <img src="/static/images/logo/logo.svg" />
+        <img src="/static/images/logo/logo.png" />
         {/* <Badge
           sx={{
             '.MuiBadge-badge': {
