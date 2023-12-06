@@ -147,9 +147,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  'transform',
-                  'opacity'
-                ])};
+    'transform',
+    'opacity'
+  ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -180,6 +180,41 @@ function SidebarMenu() {
   return (
     <>
       <MenuWrapper>
+        <List component="div">
+          <ListItem component="div">
+            <Button
+              disableRipple
+              component={RouterLink}
+              onClick={closeSidebar}
+              to="/management/transactions"
+              startIcon={<BrightnessLowTwoToneIcon />}
+            >
+              Go to blog
+            </Button>
+          </ListItem>
+          <ListItem component="div">
+            <Button
+              disableRipple
+              component={RouterLink}
+              onClick={closeSidebar}
+              to="/management/transactions"
+              startIcon={<MmsTwoToneIcon />}
+            >
+              Languages
+            </Button>
+          </ListItem>
+          <ListItem component="div">
+            <Button
+              disableRipple
+              component={RouterLink}
+              onClick={closeSidebar}
+              to="/management/transactions"
+              startIcon={<MmsTwoToneIcon />}
+            >
+              Dictionary
+            </Button>
+          </ListItem>
+        </List>
         <List component="div">
           <SubMenuWrapper>
             <List component="div">
