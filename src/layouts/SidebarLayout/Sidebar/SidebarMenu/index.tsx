@@ -180,40 +180,52 @@ function SidebarMenu() {
   return (
     <>
       <MenuWrapper>
-        <List component="div">
-          <ListItem component="div">
-            <Button
-              disableRipple
-              component={RouterLink}
-              onClick={closeSidebar}
-              to="/management/blogs"
-              startIcon={<BrightnessLowTwoToneIcon />}
-            >
-              Go to blog
-            </Button>
-          </ListItem>
-          <ListItem component="div">
-            <Button
-              disableRipple
-              component={RouterLink}
-              onClick={closeSidebar}
-              to="/management/languages"
-              startIcon={<MmsTwoToneIcon />}
-            >
-              Languages
-            </Button>
-          </ListItem>
-          <ListItem component="div">
-            <Button
-              disableRipple
-              component={RouterLink}
-              onClick={closeSidebar}
-              to="/management/dictionaries"
-              startIcon={<MmsTwoToneIcon />}
-            >
-              Dictionary
-            </Button>
-          </ListItem>
+
+        <List
+          component="div"
+          subheader={
+            <ListSubheader component="div" disableSticky>
+              Main Menu
+            </ListSubheader>
+          }
+        >
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/management/blogs"
+                  startIcon={<BrightnessLowTwoToneIcon />}
+                >
+                  Go to blog
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/management/languages"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  Languages
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/management/dictionaries"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  Dictionary
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
         </List>
         <List component="div">
           <SubMenuWrapper>
