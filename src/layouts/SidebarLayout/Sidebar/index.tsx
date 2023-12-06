@@ -17,6 +17,7 @@ import {
 
 import SidebarMenu from './SidebarMenu';
 import Logo from 'src/components/LogoSign';
+import Collapse from 'src/components/Collapse';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -62,8 +63,8 @@ function Sidebar() {
                 width: 52
               }}
             >
-              <img src="/static/images/logo/logo.svg" />
-              {/* <Logo /> */}
+              <Logo />
+              {/* <Collapse /> */}
             </Box>
           </Box>
           <Divider
@@ -75,7 +76,7 @@ function Sidebar() {
           />
           <SidebarMenu />
         </Scrollbar>
-        <Divider
+        {/* <Divider
           sx={{
             background: theme.colors.alpha.trueWhite[10]
           }}
@@ -92,7 +93,7 @@ function Sidebar() {
           >
             Upgrade to PRO
           </Button>
-        </Box>
+        </Box> */}
       </SidebarWrapper>
       <Drawer
         sx={{

@@ -99,11 +99,13 @@ function Logo() {
 
   return (
     <TooltipWrapper
-      title="Tokyo Free White React Typescript Admin Dashboard"
+      title="Wordpress Blog Automation"
       arrow
     >
-      <LogoWrapper to="/overview">
-        <Badge
+      <LogoWrapper to="/management/blogs">
+
+        <img src="/static/images/logo/logo.svg" />
+        {/* <Badge
           sx={{
             '.MuiBadge-badge': {
               fontSize: theme.typography.pxToRem(11),
@@ -120,7 +122,7 @@ function Logo() {
               <LogoSignInner />
             </LogoSign>
           </LogoSignWrapper>
-        </Badge>
+        </Badge> */}
       </LogoWrapper>
     </TooltipWrapper>
   );
