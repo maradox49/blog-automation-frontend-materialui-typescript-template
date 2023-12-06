@@ -17,6 +17,10 @@ function PageHeader() {
       </Grid>
       <Grid item>
           <OutlinedInput
+           sx={{
+            "& fieldset": { border: 'none' },
+            background: "white"
+          }}
             id="outlined-adornment-amount"
             startAdornment={<InputAdornment position="start"><Search color='primary'/></InputAdornment>}
             placeholder='Search here'
