@@ -35,6 +35,8 @@ const MenuUserBox = styled(Box)(
   ({ theme }) => `
         background: ${theme.colors.alpha.black[5]};
         padding: ${theme.spacing(2)};
+        display: flex;
+        align-items: center;
 `
 );
 
@@ -107,7 +109,7 @@ function HeaderUserbox() {
           horizontal: 'right'
         }}
       >
-        <MenuUserBox sx={{ minWidth: 210 }} display="flex">
+        <MenuUserBox sx={{ minWidth: 210 }} >
           {/* <Avatar variant="rounded" alt={user.name} src={user.avatar} /> */}
           <Person />
           <UserBoxText>
