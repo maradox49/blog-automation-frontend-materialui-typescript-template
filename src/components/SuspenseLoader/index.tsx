@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import NProgress from 'nprogress';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-function SuspenseLoader() {
+const SuspenseLoader: FC<{message: string}> = ({message}) => {
   useEffect(() => {
     NProgress.start();
 
@@ -29,7 +29,7 @@ function SuspenseLoader() {
     >
       <Box><CircularProgress size={72} disableShrink thickness={3} /></Box>
       <Typography variant='h2' color='primary'>
-        Translating...
+        {message}
       </Typography>
     </Box>
   );

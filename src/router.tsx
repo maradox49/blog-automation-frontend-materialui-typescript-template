@@ -10,7 +10,7 @@ import Login from './content/pages/Auth/Login';
 
 const Loader = (Component) => (props) =>
 (
-  <Suspense fallback={<SuspenseLoader />}>
+  <Suspense fallback={<SuspenseLoader message="" />}>
     <Component {...props} />
   </Suspense>
 );

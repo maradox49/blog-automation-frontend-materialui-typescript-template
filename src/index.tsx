@@ -6,13 +6,16 @@ import 'nprogress/nprogress.css';
 import App from 'src/App';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import * as serviceWorker from 'src/serviceWorker';
+import { LoadingProvider } from './contexts/LoadingContext';
 
 ReactDOM.render(
   <HelmetProvider>
     <SidebarProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LoadingProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LoadingProvider>
     </SidebarProvider>
   </HelmetProvider>,
   document.getElementById('root')

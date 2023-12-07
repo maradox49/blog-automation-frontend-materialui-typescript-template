@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 
 import {
   Box,
@@ -16,6 +16,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 import { Translate } from '@mui/icons-material';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import { LoadingContext } from 'src/contexts/LoadingContext';
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -31,7 +32,7 @@ const ButtonError = styled(Button)(
 function BulkActions() {
   const [onMenuOpen, menuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
-  const [isLoading, setLoading] = useState(false);
+  const { startLoading } = useContext(LoadingContext);
 
   const openMenu = (): void => {
     menuOpen(true);
@@ -45,7 +46,6 @@ function BulkActions() {
     <>
       {/* <Box display="flex" alignItems="center" justifyContent="space-between">*/}
         <Box display="flex" alignItems="center">
-          { isLoading && <SuspenseLoader />}
           <Typography variant="h5" color="text.secondary">
             Bulk actions:
           </Typography> 
@@ -53,7 +53,7 @@ function BulkActions() {
             sx={{ ml: 1 }}
             startIcon={<Translate />}
             variant="contained"
-            onClick={()=>setLoading(true)}
+            onClick={()=>startLoading("Translating...")}
           >
             Translate Selected
           </ButtonError>

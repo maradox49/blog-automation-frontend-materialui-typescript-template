@@ -89,7 +89,6 @@ const RecentOrdersTable = () => {
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const [languages, setLanguages] = useState<LanguageType[]>([])
-  const [isLoading, setLoading] = useState(false);
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
@@ -147,11 +146,9 @@ const RecentOrdersTable = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true)
       const resData = await getAllLanguageService();
       setLanguages(resData);
       console.log(resData);
-      setLoading(false);
     }
     loadData();
   }, []);
@@ -169,9 +166,6 @@ const RecentOrdersTable = () => {
         </Box>
       )}
       <Divider /> */}
-      {
-        isLoading && <SuspenseLoader />
-      }
       <TableContainer>
         <Table>
           <TableHead>
