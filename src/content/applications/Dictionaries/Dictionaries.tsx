@@ -51,7 +51,7 @@ function RecentOrders() {
 
   return (
     <Card>
-      <RecentOrdersTable dictionaries={dictionaries} />
+      <RecentOrdersTable />
     </Card>
   );
 }

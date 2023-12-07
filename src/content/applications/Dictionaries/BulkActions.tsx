@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 
 import {
   Box,
@@ -15,6 +15,9 @@ import { styled } from '@mui/material/styles';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 import { Delete } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import { deleteDictionaryService } from 'src/services/Dictionary';
+import { DictionaryContext } from 'src/contexts/DictionaryContext';
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -27,9 +30,11 @@ const ButtonError = styled(Button)(
     `
 );
 
-function BulkActions() {
+function BulkActions(props) {
   const [onMenuOpen, menuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
+  const { selected, setSelected } = props;
+  const { removeBulkDictionary } = useContext(DictionaryContext)
 
   const openMenu = (): void => {
     menuOpen(true);
@@ -38,6 +43,11 @@ function BulkActions() {
   const closeMenu = (): void => {
     menuOpen(false);
   };
+
+  const handleDeleteSelected = async () => {
+    removeBulkDictionary(selected);
+    setSelected([])
+  }
 
   return (
     <>
@@ -49,45 +59,18 @@ function BulkActions() {
           sx={{ ml: 1 }}
           startIcon={<Delete />}
           variant="contained"
+          onClick={handleDeleteSelected}
         >
           Delete Selected
         </ButtonError>
       </Box>
-    {/* <IconButton
-          color="primary"
-          onClick={openMenu}
-          ref={moreRef}
-          sx={{ ml: 2, p: 1 }}
-        >
-          <MoreVertTwoToneIcon />
-        </IconButton>
-      </Box>
-
-      <Menu
-        keepMounted
-        anchorEl={moreRef.current}
-        open={onMenuOpen}
-        onClose={closeMenu}
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
-        }}
-        transformOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
-        }}
-      >
-        <List sx={{ p: 1 }} component="nav">
-          <ListItem button>
-            <ListItemText primary="Bulk delete selected" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Bulk edit selected" />
-          </ListItem>
-        </List>
-      </Menu> */}
     </>
   );
+}
+
+BulkActions.propTypes = {
+  selected: PropTypes.array.isRequired,
+  setSelected: PropTypes.func.isRequired
 }
 
 export default BulkActions;

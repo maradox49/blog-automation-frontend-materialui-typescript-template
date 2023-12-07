@@ -11,11 +11,17 @@ import {
 import PropTypes from 'prop-types';
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import { useState, useContext } from 'react';
+import { DictionaryContext } from 'src/contexts/DictionaryContext';
 
 const emails = ["ABCDE", "DEFGH"];
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
+  const [language, setLanguage] = useState("")
+  const [badEntry, setBadEntry] = useState("")
+  const [rightEntry, setRightEntry] = useState("")
+  const { addDictionary } = useContext(DictionaryContext);
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -24,6 +30,15 @@ function SimpleDialog(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+
+  const handleAddDictionary = () => {
+    addDictionary({
+      language: language,
+      badEntry: badEntry,
+      rightEntry: rightEntry
+    })
+    onClose("")
+  }
 
   return (
     <Dialog
@@ -80,6 +95,8 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Language'
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
             />
             <OutlinedInput fullWidth
               sx={{
@@ -89,6 +106,8 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Bad Entry'
+              value={badEntry}
+              onChange={(e) => setBadEntry(e.target.value)}
             />
             <OutlinedInput fullWidth
               sx={{
@@ -98,10 +117,18 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Right Entry'
+              value={rightEntry}
+              onChange={(e) => setRightEntry(e.target.value)}
             />
           </Stack>
           <Box paddingTop={"33px"}>
-            <Button sx={{ width: "200px" }} variant='contained' color='primary'>Add</Button>
+            <Button
+              onClick={handleAddDictionary}
+              sx={{ width: "200px" }}
+              variant='contained'
+              color='primary'>
+              Add
+            </Button>
           </Box>
         </Box>
       </Box>

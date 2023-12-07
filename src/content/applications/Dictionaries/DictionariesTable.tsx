@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useContext, useEffect } from 'react';
 import { format } from 'date-fns';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import {
   Card,
   Stack,
   Checkbox,
-  IconButton,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -23,8 +23,9 @@ import {
   MenuItem,
   Typography,
   useTheme,
-  CardHeader,
-  styled
+  OutlinedInput,
+  styled,
+  Dialog
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -33,6 +34,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { DictionaryType } from 'src/models/dictionary';
 import { LanguageName } from 'src/models/language';
+import { DictionaryContext } from 'src/contexts/DictionaryContext';
 
 interface RecentOrdersTableProps {
   className?: string;
@@ -45,6 +47,139 @@ const TableCellItem = styled(TableCell)(
 `
 );
 
+function SimpleDialog(props) {
+  const { onClose, open, dictionary } = props;
+  const [language, setLanguage] = useState("")
+  const [badEntry, setBadEntry] = useState("")
+  const [rightEntry, setRightEntry] = useState("")
+  const { editDictionary } = useContext(DictionaryContext);
+
+  useEffect(() => {
+    setLanguage(dictionary?.language)
+    setBadEntry(dictionary?.badEntry)
+    setRightEntry(dictionary?.rightEntry)
+  }, [dictionary])
+
+  const handleClose = () => {
+    onClose("");
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+
+  const handleUpdateDictionary = () => {
+    editDictionary({
+      id: dictionary.id,
+      language: language,
+      badEntry: badEntry,
+      rightEntry: rightEntry
+    })
+    onClose("")
+  }
+
+  return (
+    <Dialog
+      onClose={handleClose} open={open}>
+      <Box
+        sx={{
+          "width": "369px",
+          "height": "425px",
+          "background": "linear-gradient(139deg, #0E8A74 23.19%, #26C58B 104.35%)",
+          "position": "relative",
+          "overflow": "hidden"
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "255.429px",
+            height: "427.169px",
+            top: "-100px",
+            right: "-100px",
+            flexShrink: 0,
+            borderRadius: "100%",
+            background: "rgba(205, 255, 242, 0.10)"
+          }}
+        ></Box>
+        <Box sx={{
+          position: "absolute",
+          top: "33px",
+          left: "30px"
+        }}
+        ><img src="/static/images/languages/wave.png" width={"35px"} /></Box>
+        <Box sx={{
+          position: "absolute",
+          bottom: "30px",
+          right: "27px"
+        }}
+        ><img src="/static/images/languages/vector.png" width={"35px"} /></Box>
+        <Box sx={{
+          position: "absolute",
+          top: "35px",
+          left: "120px"
+        }}>
+          <Typography fontFamily={"Poppins"} fontWeight={"500"} fontSize={"17px"} color={"white"}>
+            Add Dictionary
+          </Typography>
+        </Box>
+        <Box padding={"40px"} paddingTop={"100px"} textAlign={"center"}>
+          <Stack direction={"column"} spacing={2}>
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Language'
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            />
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Bad Entry'
+              value={badEntry}
+              onChange={(e) => setBadEntry(e.target.value)}
+            />
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Right Entry'
+              value={rightEntry}
+              onChange={(e) => setRightEntry(e.target.value)}
+            />
+          </Stack>
+          <Box paddingTop={"33px"}>
+            <Button
+              onClick={handleUpdateDictionary}
+              sx={{ width: "200px" }}
+              variant='contained'
+              color='primary'>
+              Update
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  dictionary: PropTypes.any.isRequired
+};
+
 const ImageWrapper = styled(Box)(
   ({ theme }) => `
       display: flex;
@@ -56,7 +191,6 @@ const ImageWrapper = styled(Box)(
       overflow: hidden;
   `
 )
-
 
 const getFlagUrl = (language: LanguageName): string => {
   const map = {
@@ -79,13 +213,37 @@ const applyPagination = (
   return dictionaries.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
+const RecentOrdersTable = () => {
   const [selectedDictionaryTypes, setSelectedDictionaryTypes] = useState<string[]>(
     []
   );
   const selectedBulkActions = selectedDictionaryTypes.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
+  const [editDictionary, setEditDictionary] = useState({});
+
+  const { dictionaries, loadDictionary, removeDictionary } = useContext(DictionaryContext);
+
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
+  useEffect(() => {
+    loadDictionary();
+  }, [])
+
+  const handleEditDictionary = async (dictionary: DictionaryType) => {
+    setEditDictionary(dictionary);
+    handleClickOpen();
+  }
 
   const handleSelectAllDictionaryTypes = (
     event: ChangeEvent<HTMLInputElement>
@@ -223,10 +381,16 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
                           "& fieldset": { border: 'none' },
                         }}
                       >
-                        <MenuItem value={10}>
+                        <MenuItem
+                          onClick={() => removeDictionary(dictionary.id)}
+                          value={10}>
                           Delete
                         </MenuItem>
-                        <MenuItem value={20}>Edit</MenuItem>
+                        <MenuItem
+                          onClick={() => handleEditDictionary(dictionary)}
+                          value={20}>
+                          Edit
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </TableCellItem>
@@ -240,7 +404,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
         <Stack direction="row" justifyContent={"space-between"}>
           <Box>
             {selectedBulkActions && (
-              <BulkActions />
+              <BulkActions
+                selected={selectedDictionaryTypes}
+                setSelected={setSelectedDictionaryTypes}
+              />
             )}
           </Box>
           <TablePagination
@@ -254,16 +421,21 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
           />
         </Stack>
       </Box>
+      <SimpleDialog
+        open={open}
+        onClose={handleClose}
+        dictionary={editDictionary}
+      />
     </Card >
   );
 };
 
-RecentOrdersTable.propTypes = {
-  dictionaries: PropTypes.array.isRequired
-};
+// RecentOrdersTable.propTypes = {
+//   dictionaries: PropTypes.array.isRequired
+// };
 
-RecentOrdersTable.defaultProps = {
-  dictionaries: []
-};
+// RecentOrdersTable.defaultProps = {
+//   dictionaries: []
+// };
 
 export default RecentOrdersTable;
