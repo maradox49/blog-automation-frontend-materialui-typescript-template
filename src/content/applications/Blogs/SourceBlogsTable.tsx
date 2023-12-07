@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tooltip,
+  Stack,
   Divider,
   Box,
   FormControl,
@@ -30,6 +30,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { BlogStatus, BlogType } from 'src/models/blog';
+import { DoneAll, Translate } from '@mui/icons-material';
 
 interface SourceBlogsTable {
   className?: string;
@@ -265,13 +266,13 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                   </TableCellItem>
                   <TableCellItem>
 
-                  <Typography 
+                    <Typography
                       variant="body2" noWrap>
                       {blog.date.split(' ')[0]}
                     </Typography>
-                    <Typography 
+                    <Typography
                       variant="body2" noWrap>
-                      {blog.date.split(' ').slice(1,3).join(' ')}
+                      {blog.date.split(' ').slice(1, 3).join(' ')}
                     </Typography>
                   </TableCellItem>
                   <TableCellItem>
@@ -305,11 +306,11 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                     </Typography>
                   </TableCellItem>
                   <TableCellItem align="center">
-                      {
-                        parseInt(blog.id) % 2 ?
-                        <Button variant='contained' sx={{width: "100px"}} color='primary' size='small'>Done</Button>:
-                        <Button variant='contained' sx={{width: "100px"}} color='error' size='small'>Translate</Button>
-                      }
+                    {
+                      parseInt(blog.id) % 2 ?
+                        <Button variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<DoneAll />} color='primary' size='small'>&nbsp;&nbsp;&nbsp;Done</Button> :
+                        <Button variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<Translate />} color='error' size='small'>Translate</Button>
+                    }
                   </TableCellItem>
                 </TableRow>
               );
@@ -318,15 +319,22 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
         </Table>
       </TableContainer>
       <Box p={2}>
-        <TablePagination
-          component="div"
-          count={filteredBlogTypes.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
+        <Stack direction="row" justifyContent={"space-between"}>
+          <Box>
+            {selectedBulkActions && (
+              <BulkActions />
+            )}
+          </Box>
+          <TablePagination
+            component="div"
+            count={filteredBlogTypes.length}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleLimitChange}
+            page={page}
+            rowsPerPage={limit}
+            rowsPerPageOptions={[5, 10, 25, 30]}
+          />
+        </Stack>
       </Box>
     </Card>
   );
