@@ -41,7 +41,7 @@ function Sidebar() {
       <SidebarWrapper
         sx={{
           display: {
-            xs: 'none',
+            xs: !sidebarToggle? 'none': 'inline-block',
             lg: 'inline-block'
           },
           borderRight: "2px solid #f0f0f0",
