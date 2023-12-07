@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
@@ -33,6 +33,8 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { LanguageName, LanguageType } from 'src/models/language';
+import SuspenseLoader from 'src/components/SuspenseLoader';
+import { getAllLanguageService } from 'src/services/Language';
 
 // interface RecentOrdersTableProps {
 //   className?: string;
@@ -45,8 +47,8 @@ const TableCellItem = styled(TableCell)(
 `
 );
 
-const ImageWrapper = styled(Box) (
-  ({theme}) => `
+const ImageWrapper = styled(Box)(
+  ({ theme }) => `
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,6 +89,7 @@ const RecentOrdersTable = () => {
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const [languages, setLanguages] = useState<LanguageType[]>([])
+  const [isLoading, setLoading] = useState(false);
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
@@ -142,6 +145,17 @@ const RecentOrdersTable = () => {
     selectedLanguageTypes.length === languages.length;
   const theme = useTheme();
 
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true)
+      const resData = await getAllLanguageService();
+      setLanguages(resData);
+      console.log(resData);
+      setLoading(false);
+    }
+    loadData();
+  }, []);
+
   return (
     <Card>
       {/* {selectedBulkActions && (
@@ -155,6 +169,9 @@ const RecentOrdersTable = () => {
         </Box>
       )}
       <Divider /> */}
+      {
+        isLoading && <SuspenseLoader />
+      }
       <TableContainer>
         <Table>
           <TableHead>
@@ -271,7 +288,7 @@ const RecentOrdersTable = () => {
             rowsPerPage={limit}
             rowsPerPageOptions={[5, 10, 25, 30]}
           />
-          </Stack>
+        </Stack>
       </Box>
     </Card>
   );
