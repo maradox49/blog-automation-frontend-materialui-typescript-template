@@ -57,24 +57,25 @@ export const getAllBlogsService = async (username: string, password: string, pag
 //     }
 // }
 
-// export const getBlogStatusService = async (postIds: string[]) => {
-//     try{
-//         const url = `${config.baseUrl}/history/filter`;
-//         const response = await fetch(url, {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify(postIds)
-//         });
+export const getBlogStatusService = async (postIds: string[]) => {
+    try{
+        const url = `${config.baseUrl}/history/filter`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postIds)
+        });
 
-//         if (response.ok) {
-//             const data = await response.json();
-//             return data;
-//         }
-//         return null;
-//     } catch(error) {
-//         return null;
-//     }
-// }
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+        return null;
+    } catch(error) {
+        return null;
+    }
+}
 
 // export const sendBlogService = async ( blog: BlogType, language: LanguageType) => {
 //     try {
@@ -101,28 +102,6 @@ export const getAllBlogsService = async (username: string, password: string, pag
 //         console.log(error)
 //     }
 // } 
-
-// export const getAllBlogsFromOtherService = async (username: string, password: string) => {
-//     try {
-//         console.log(username, password)
-//         const url = `https://surfbrettmagazin.de/wp-json/wp/v2/posts`;
-
-//         const response = await fetch(url, {
-//             headers: {
-//                 'Authorization': 'Basic ' + btoa(`${username}:${password}`),
-//             }
-//         });
-
-//         if (response.ok) {
-//             const data = await response.json();
-//             console.log(data);
-//         }
-//         return null;
-//     } catch (error) {
-//         return null;
-//     }
-// }
-
 
 // export const sendBlogStatus = async ( postId: string, language: string, targetId: string) => {
 //     try {

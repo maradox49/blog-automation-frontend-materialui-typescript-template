@@ -9,3 +9,9 @@ export interface BlogType {
   number: number;
   content: string;
 }
+
+export interface BlogStatusType {
+  language: string;
+  targetId: string;
+  sent: boolean;
+}

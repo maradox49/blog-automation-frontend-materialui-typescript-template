@@ -31,7 +31,7 @@ import Label from 'src/components/Label';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
-import { BlogStatus, BlogType } from 'src/models/blog';
+import { BlogStatus, BlogStatusType, BlogType } from 'src/models/blog';
 import { DoneAll, Link, Send, Translate } from '@mui/icons-material';
 import { BlogContext } from 'src/contexts/BlogContext';
 import { UserContext } from 'src/contexts/UserContext';
@@ -109,7 +109,7 @@ const LabelBox = styled(Box)(
 )
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, status } = props;
   const theme = useTheme()
 
   const handleClose = () => {
@@ -167,85 +167,40 @@ function SimpleDialog(props) {
         </Box>
         <Box padding={"40px"} paddingTop={"100px"} paddingBottom={"30px"} textAlign={"center"}>
           <Grid container spacing={2}>
-          <Grid item sm={5}>
-              <LabelBox>
-                <Typography variant='h4'>
-                  German
-                </Typography>
-              </LabelBox>
-            </Grid>
-            <Grid item sm={7}>
-              <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
-                View
-              </Button>
-            </Grid>
-            <Grid item sm={5}>
-              <LabelBox>
-                <Typography variant='h4'>
-                  Italian
-                </Typography>
-              </LabelBox>
-            </Grid>
-            <Grid item sm={7}>
-              <Button endIcon={<Translate />} fullWidth variant='contained' color='primary'>
-                Translate
-              </Button>
-            </Grid>
-            <Grid item sm={5}>
-              <LabelBox>
-                <Typography variant='h4'>
-                  French
-                </Typography>
-              </LabelBox>
-            </Grid>
-            <Grid item sm={7}>
-              <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
-                View
-              </Button>
-            </Grid>
-            
+            {
+              status.map((detail: BlogStatusType) => {
+                return (
+                  <>
+                    <Grid item sm={5}>
+                      <LabelBox>
+                        <Typography variant='h4'>
+                          {detail.language}
+                        </Typography>
+                      </LabelBox>
+                    </Grid>
+                    {
+                      detail.sent ?
+                        <Grid item sm={7}>
+                          <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
+                            View
+                          </Button>
+                        </Grid> :
+                        <Grid item sm={7}>
+                          <Button endIcon={<Translate />} fullWidth variant='contained' color='primary'>
+                            Translate
+                          </Button>
+                        </Grid>
+                    }
+                  </>
+                )
+              })
+            }
+
+
           </Grid>
-          {/* <Stack direction={"column"} spacing={2}>
-            <OutlinedInput fullWidth
-              sx={{
-                "& fieldset": { border: 'none' },
-                background: "white",
-                padding: "5px"
-              }}
-              id="outlined-adornment-amount"
-              placeholder='Language'
-            />
-            <OutlinedInput fullWidth
-              sx={{
-                "& fieldset": { border: 'none' },
-                background: "white",
-                padding: "5px"
-              }}
-              id="outlined-adornment-amount"
-              placeholder='URL'
-            />
-            <OutlinedInput fullWidth
-              sx={{
-                "& fieldset": { border: 'none' },
-                background: "white",
-                padding: "5px"
-              }}
-              id="outlined-adornment-amount"
-              placeholder='Username'
-            />
-            <OutlinedInput fullWidth
-              sx={{
-                "& fieldset": { border: 'none' },
-                background: "white",
-                padding: "5px"
-              }}
-              id="outlined-adornment-amount"
-              placeholder='Password'
-            />
-          </Stack> */}
-          <Box paddingTop={"33px"}>
+          {/* <Box paddingTop={"33px"}>
             <Button sx={{ width: "200px" }} variant='contained' color='primary' endIcon={<Translate />}>Translate All</Button>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Dialog>
@@ -255,7 +210,8 @@ function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired
+  selectedValue: PropTypes.string.isRequired,
+  status: PropTypes.array.isRequired
 };
 
 const RecentOrdersTable = () => {
@@ -270,30 +226,31 @@ const RecentOrdersTable = () => {
   });
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("hello");
-  const { blogs, loadBlogs, blogCount, search } = useContext(BlogContext);
+  const { blogs, loadBlogs, blogCount, search, blogStatus } = useContext(BlogContext);
   const { username } = useContext(UserContext);
+  const [viewStatusId, setViewStatusId] = useState(-1);
 
-  useEffect(()=>{
-    if ( username ) {
-      loadBlogs(page+1, limit, search);
+  useEffect(() => {
+    if (username) {
+      loadBlogs(page + 1, limit, search);
     }
   }, [username])
 
-  useEffect(()=>{
-    const possiblePageCount = Math.ceil(blogCount/limit);
+  useEffect(() => {
+    const possiblePageCount = Math.ceil(blogCount / limit);
     console.log(page, search, limit, blogCount)
-    if ( possiblePageCount === 0 ) {
-      if ( page === 0 ) {
+    if (possiblePageCount === 0) {
+      if (page === 0) {
         loadBlogs(1, limit, search);
-      } else 
+      } else
         setPage(0);
     }
-    else if ( page >= possiblePageCount )
-      setPage(possiblePageCount-1);
-    else if ( page < 0 )
+    else if (page >= possiblePageCount)
+      setPage(possiblePageCount - 1);
+    else if (page < 0)
       setPage(0);
     else
-      loadBlogs(page+1, limit, search);
+      loadBlogs(page + 1, limit, search);
   }, [search, page, limit])
 
   const handleClickOpen = () => {
@@ -304,6 +261,11 @@ const RecentOrdersTable = () => {
     setOpen(false);
     setSelectedValue(value);
   };
+
+  const handleViewStatus = (id: number) => {
+    setViewStatusId(id);
+    handleClickOpen();
+  }
 
   const statusOptions = [
     {
@@ -438,7 +400,7 @@ const RecentOrdersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {blogs.map((blog) => {
+            {blogs.map((blog, rowIndex) => {
               const isBlogTypeSelected = selectedBlogTypes.includes(
                 blog.id
               );
@@ -505,16 +467,31 @@ const RecentOrdersTable = () => {
                       gutterBottom
                       noWrap
                     >
-                      {blog.number}
+                      {
+                        blogStatus[rowIndex].filter((status) => (status.sent === true)).length
+                      }
                     </Typography>
                   </TableCellItem>
                   <TableCellItem align="center">
                     {
-                      parseInt(blog.id) % 2 ?
+                      blogStatus[rowIndex].filter((status) => (status.sent === true)).length === blogStatus[rowIndex].length ?
                         <Button
-                          onClick={handleClickOpen}
-                          variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<DoneAll />} color='primary' size='small'>&nbsp;&nbsp;&nbsp;Done</Button> :
-                        <Button variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<Translate />} color='error' size='small'>Translate</Button>
+                          onClick={() => handleViewStatus(rowIndex)}
+                          variant='contained'
+                          sx={{ width: "120px", justifyContent: "flex-start" }}
+                          startIcon={<DoneAll />}
+                          color='primary'
+                          size='small'>
+                          &nbsp;&nbsp;&nbsp;Done
+                        </Button> :
+                        <Button variant='contained'
+                          onClick={() => handleViewStatus(rowIndex)}
+                          sx={{ width: "120px", justifyContent: "flex-start" }}
+                          startIcon={<Translate />}
+                          color='error'
+                          size='small'>
+                          Translate
+                        </Button>
                     }
                   </TableCellItem>
                 </TableRow>
@@ -546,6 +523,7 @@ const RecentOrdersTable = () => {
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
+        status={blogStatus[viewStatusId]}
       />
     </Card>
   );
