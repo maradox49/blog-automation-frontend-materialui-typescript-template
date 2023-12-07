@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import {
-  Box,
-  Typography,
-  Container,
-  Divider,
-  OutlinedInput,
-  IconButton,
-  Tooltip,
-  FormControl,
-  InputAdornment,
-  Button,
-  FormHelperText
+    Box,
+    Typography,
+    Container,
+    Divider,
+    OutlinedInput,
+    IconButton,
+    Tooltip,
+    FormControl,
+    InputAdornment,
+    Button,
+    FormHelperText,
+    Grid,
+    useTheme,
+    Stack
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import Logo from 'src/components/LogoSign';
@@ -20,9 +23,11 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
+import { Password, Person, VpnKey } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
 
 const MainContent = styled(Box)(
-  () => `
+    () => `
     height: 100%;
     display: flex;
     flex: 1;
@@ -34,150 +39,117 @@ const MainContent = styled(Box)(
 );
 
 const TypographyH1 = styled(Typography)(
-  ({ theme }) => `
+    ({ theme }) => `
   font-size: ${theme.typography.pxToRem(75)};
 `
 );
 
 const TypographyH3 = styled(Typography)(
-  ({ theme }) => `
+    ({ theme }) => `
   color: ${theme.colors.alpha.black[50]};
 `
 );
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
-  ({ theme }) => `
+    ({ theme }) => `
     background-color: ${theme.colors.alpha.white[100]};
 `
 );
 
 const ButtonNotify = styled(Button)(
-  ({ theme }) => `
+    ({ theme }) => `
     margin-right: -${theme.spacing(1)};
 `
 );
 
 function Login() {
-  const calculateTimeLeft = () => {
-    const difference = +new Date(`2023`) - +new Date();
-    let timeLeft = {};
+    const calculateTimeLeft = () => {
+        const difference = +new Date(`2023`) - +new Date();
+        let timeLeft = {};
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      };
-    }
+        if (difference > 0) {
+            timeLeft = {
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60)
+            };
+        }
 
-    return timeLeft;
-  };
+        return timeLeft;
+    };
+    const theme = useTheme();
+    const navigate = useNavigate();
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-  });
+    useEffect(() => {
+        setTimeout(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+    });
 
-  const timerComponents = [];
+    const timerComponents = [];
 
-  Object.keys(timeLeft).forEach((interval) => {
-    if (!timeLeft[interval]) {
-      return;
-    }
+    Object.keys(timeLeft).forEach((interval) => {
+        if (!timeLeft[interval]) {
+            return;
+        }
 
-    timerComponents.push(
-      <Box textAlign="center" px={3}>
-        <TypographyH1 variant="h1">{timeLeft[interval]}</TypographyH1>
-        <TypographyH3 variant="h3">{interval}</TypographyH3>
-      </Box>
-    );
-  });
-
-  return (
-    <>
-      <Helmet>
-        <title>Status - Coming Soon</title>
-      </Helmet>
-      <MainContent>
-        <Container maxWidth="md">
-          <Logo />
-          <Box textAlign="center" mb={3}>
-            <Container maxWidth="xs">
-              <Typography variant="h1" sx={{ mt: 4, mb: 2 }}>
-                Login Page
-              </Typography>
-              <Typography
-                variant="h3"
-                color="text.secondary"
-                fontWeight="normal"
-                sx={{ mb: 4 }}
-              >
-                We're working on implementing the last features before our
-                launch!
-              </Typography>
-            </Container>
-            <img
-              alt="Coming Soon"
-              height={200}
-              src="/static/images/status/coming-soon.svg"
-            />
-          </Box>
-
-          <Box display="flex" justifyContent="center">
-            {timerComponents.length ? timerComponents : <>Time's up!</>}
-          </Box>
-
-          <Container maxWidth="sm">
-            <Box sx={{ textAlign: 'center', p: 4 }}>
-              <FormControl variant="outlined" fullWidth>
-                <OutlinedInputWrapper
-                  type="text"
-                  placeholder="Enter your email address here..."
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <ButtonNotify variant="contained" size="small">
-                        Notify Me
-                      </ButtonNotify>
-                    </InputAdornment>
-                  }
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <MailTwoToneIcon />
-                    </InputAdornment>
-                  }
-                />
-                <FormHelperText>
-                  We'll email you once our website is launched!
-                </FormHelperText>
-              </FormControl>
-              <Divider sx={{ my: 4 }} />
-              <Box sx={{ textAlign: 'center' }}>
-                <Tooltip arrow placement="top" title="Facebook">
-                  <IconButton color="primary">
-                    <FacebookIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip arrow placement="top" title="Twitter">
-                  <IconButton color="primary">
-                    <TwitterIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip arrow placement="top" title="Instagram">
-                  <IconButton color="primary">
-                    <InstagramIcon />
-                  </IconButton>
-                </Tooltip>
-              </Box>
+        timerComponents.push(
+            <Box textAlign="center" px={3}>
+                <TypographyH1 variant="h1">{timeLeft[interval]}</TypographyH1>
+                <TypographyH3 variant="h3">{interval}</TypographyH3>
             </Box>
-          </Container>
-        </Container>
-      </MainContent>
-    </>
-  );
+        );
+    });
+
+    return (
+        <>
+            <Helmet>
+                <title>Status - Coming Soon</title>
+            </Helmet>
+            <Grid container>
+                <Grid item md={5}>
+                    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
+                        <Logo />
+                        <Typography variant='h1' color={theme.colors.primary.light} paddingBottom={20} textAlign={"center"}>
+                            WELCOME TO <br />AUTOMATION OF SINGLEQUIVER
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid item md={7}>
+                    <Box sx={{ background: theme.colors.alpha.black["5"] }} display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
+                        <Stack spacing={2} width={500}>
+                            <OutlinedInput
+                                fullWidth
+                                sx={{
+                                    "& fieldset": { border: 'none' },
+                                    background: "white"
+                                }}
+                                id="outlined-adornment-amount"
+                                startAdornment={<InputAdornment position="start"><Person color='primary' /></InputAdornment>}
+                                placeholder='Username'
+                            />
+                            <OutlinedInput
+                                fullWidth
+                                sx={{
+                                    "& fieldset": { border: 'none' },
+                                    background: "white"
+                                }}
+                                id="outlined-adornment-amount"
+                                startAdornment={<InputAdornment position="start"><VpnKey color='primary' /></InputAdornment>}
+                                placeholder='Password'
+                            />
+                            <Button fullWidth variant='contained' 
+                            onClick={()=>navigate("/management/blogs")}
+                            >LOGIN</Button>
+                        </Stack>
+                    </Box>
+                </Grid>
+            </Grid>
+        </>
+    );
 }
 
 export default Login;
