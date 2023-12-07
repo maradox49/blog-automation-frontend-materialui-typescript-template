@@ -48,7 +48,7 @@ const getStatusLabel = (blogStatus: BlogStatus): JSX.Element => {
     },
     publish: {
       text: 'publish',
-      color: 'success'
+      color: 'primary'
     },
     pending: {
       text: 'pending',
@@ -228,7 +228,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
               <TableCell>Date</TableCell>
               <TableCell>Slug</TableCell>
               <TableCell>Title</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell align="right">Number</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
@@ -292,7 +292,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                       {blog.title}
                     </Typography>
                   </TableCellItem>
-                  <TableCellItem align="right">
+                  <TableCellItem align="center">
                     {getStatusLabel(blog.status)}
                   </TableCellItem>
                   <TableCellItem align="right">
@@ -307,12 +307,8 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                   <TableCellItem align="center">
                       {
                         parseInt(blog.id) % 2 ?
-                        <Button variant='contained'
-                        sx={{
-                          width: "80%"
-                        }}
-                         color='success' size='small'>Done</Button>:
-                        <Button variant='contained' color='error'  size='small'>Translate</Button>
+                        <Button variant='contained' sx={{width: "100px"}} color='primary' size='small'>Done</Button>:
+                        <Button variant='contained' sx={{width: "100px"}} color='error' size='small'>Translate</Button>
                       }
                   </TableCellItem>
                 </TableRow>
