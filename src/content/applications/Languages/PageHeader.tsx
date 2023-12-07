@@ -165,7 +165,7 @@ function PageHeader() {
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
-        <Typography variant="h3" component="h3" gutterBottom>
+        <Typography variant="h1" component="h1" gutterBottom>
           Languages
         </Typography>
       </Grid>

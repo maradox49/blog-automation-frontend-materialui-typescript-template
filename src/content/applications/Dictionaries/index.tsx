@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container } from '@mui/material';
+import { Grid, Container, Stack, Box } from '@mui/material';
 import Footer from 'src/components/Footer';
 
 import RecentOrders from './Dictionaries';
@@ -12,7 +12,13 @@ function ApplicationsTransactions() {
       <Helmet>
         <title>Dictionaries - Applications</title>
       </Helmet>
-      <PageTitleWrapper>
+      <Stack spacing={4} padding={4} marginTop={5}>
+        <PageHeader />
+        <Box>
+          <RecentOrders />
+        </Box>
+      </Stack>
+      {/* <PageTitleWrapper>
         <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -27,7 +33,7 @@ function ApplicationsTransactions() {
             <RecentOrders />
           </Grid>
         </Grid>
-      </Container>
+      </Container> */}
       {/* <Footer /> */}
     </>
   );

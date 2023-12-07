@@ -4,7 +4,7 @@ import { Box, Container, styled } from '@mui/material';
 
 const PageTitle = styled(Box)(
   ({ theme }) => `
-        padding: ${theme.spacing(4)};
+        padding: ${theme.spacing(3)};
 `
 );
 
@@ -16,7 +16,8 @@ const PageTitleWrapper: FC<PageTitleWrapperProps> = ({ children }) => {
   return (
     <PageTitle>
     {/* <PageTitle className="MuiPageTitle-wrapper"> */}
-      <Container maxWidth="lg">{children}</Container>
+      {/* <Container maxWidth="lg"></Container> */}
+      {children}
     </PageTitle>
   );
 };
