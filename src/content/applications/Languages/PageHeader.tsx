@@ -3,11 +3,17 @@ import { Typography, Button, Grid, Dialog, DialogTitle, List, ListItem, ListItem
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { AddIcCallOutlined, PersonPinCircleOutlined, Search } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
+import { LanguageContext } from 'src/contexts/LanguageContext';
 
 const emails = ["ABCDE", "DEFGH"];
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, addLanguage } = props;
+  const [lang, setLang] = useState("")
+  const [url, setUrl] = useState("")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -16,6 +22,16 @@ function SimpleDialog(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+
+  const handleAddLanguage = async () => {
+    await addLanguage({
+      name: lang,
+      url,
+      username,
+      password
+    })
+    handleClose();
+  }
 
   return (
     <Dialog
@@ -52,7 +68,7 @@ function SimpleDialog(props) {
           bottom: "30px",
           right: "27px"
         }}
-        ><img src="/static/images/languages/vector.png" width={"35px"}/></Box>
+        ><img src="/static/images/languages/vector.png" width={"35px"} /></Box>
         <Box sx={{
           position: "absolute",
           top: "35px",
@@ -72,6 +88,8 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Language'
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
             />
             <OutlinedInput fullWidth
               sx={{
@@ -81,6 +99,8 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='URL'
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
             />
             <OutlinedInput fullWidth
               sx={{
@@ -90,6 +110,8 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Username'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <OutlinedInput fullWidth
               sx={{
@@ -99,10 +121,16 @@ function SimpleDialog(props) {
               }}
               id="outlined-adornment-amount"
               placeholder='Password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Stack>
           <Box paddingTop={"33px"}>
-            <Button sx={{width: "200px"}} variant='contained' color='primary'>Add</Button>
+            <Button
+              onClick={handleAddLanguage}
+              sx={{ width: "200px" }}
+              variant='contained'
+              color='primary'>Add</Button>
           </Box>
         </Box>
       </Box>
@@ -141,7 +169,8 @@ function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired
+  selectedValue: PropTypes.string.isRequired,
+  addLanguage: PropTypes.func.isRequired
 };
 
 function PageHeader() {
@@ -149,6 +178,7 @@ function PageHeader() {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg'
   };
+  const { addLanguage } = useContext(LanguageContext);
 
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
@@ -175,6 +205,7 @@ function PageHeader() {
             selectedValue={selectedValue}
             open={open}
             onClose={handleClose}
+            addLanguage={addLanguage}
           />
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}

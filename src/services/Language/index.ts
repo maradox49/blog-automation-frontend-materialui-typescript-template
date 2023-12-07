@@ -8,8 +8,8 @@ export const getAllLanguageService = async () => {
         const response = await fetch(url);
 
         if (response.ok) {
-            const data = await response.json();
-            console.log(data);
+            let data = await response.json();
+            data = data.map(item=>({...item, id: ""+item.id}))
             return data;
         }
         return null;

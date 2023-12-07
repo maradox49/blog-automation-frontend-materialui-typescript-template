@@ -3,10 +3,10 @@ import { LanguageType } from 'src/models/language';
 import { getAllLanguageService } from 'src/services/Language';
 type LanguageContext = {
     languages: LanguageType[],
-    load: () => void,
-    add: (LanguageType) => void,
-    remove: (string) => void,
-    edit: (string, LanguageType) => void
+    loadLanguage: () => void,
+    addLanguage: (LanguageType) => void,
+    removeLanguage: (string) => void,
+    editLanguage: (string, LanguageType) => void
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -17,7 +17,7 @@ export const LanguageContext = createContext<LanguageContext>(
 export const LanguageProvider: FC = ({ children }) => {
     const [languages, setLanguages] = useState<LanguageType[]>([]);
 
-    const load = async () => {
+    const loadLanguage = async () => {
         try {
             const responseData = await getAllLanguageService();
             if ( responseData ) {
@@ -27,31 +27,31 @@ export const LanguageProvider: FC = ({ children }) => {
         }
     }
 
-    const add = async (language: LanguageType) => {
+    const addLanguage = async (language: LanguageType) => {
         setLanguages([
             ...languages,
             language
         ])
     }
 
-    const remove = async ( id: string ) => {
+    const removeLanguage = async ( id: string ) => {
         setLanguages(languages.filter(
             language => (language.id !== id)
         ))
     }
 
-    const edit = async ( id: string, language: LanguageType ) => {
+    const editLanguage = async ( id: string, _language: LanguageType ) => {
         setLanguages(languages.map(
             language => {
-                if ( language.id === id ) return language;
-                return 
+                if ( language.id === id ) return _language;
+                return language;
             }
         ))
     }
 
   return (
     <LanguageContext.Provider
-      value={{ languages, load, add, edit, remove }}
+      value={{ languages, loadLanguage, addLanguage, editLanguage, removeLanguage }}
     >
       {children}
     </LanguageContext.Provider>
