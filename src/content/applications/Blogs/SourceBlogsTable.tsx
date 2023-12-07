@@ -21,7 +21,8 @@ import {
   MenuItem,
   Typography,
   useTheme,
-  CardHeader
+  CardHeader,
+  styled
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -82,6 +83,12 @@ const applyPagination = (
 ): BlogType[] => {
   return blogs.slice(page * limit, page * limit + limit);
 };
+
+const TableCellItem = styled(TableCell)(
+  ({ theme }) => `
+        color: ${theme.colors.secondary.main};
+`
+);
 
 const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
   const [selectedBlogTypes, setSelectedBlogTypes] = useState<string[]>(
@@ -237,7 +244,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                   key={blog.id}
                   selected={isBlogTypeSelected}
                 >
-                  <TableCell padding="checkbox">
+                  <TableCellItem padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isBlogTypeSelected}
@@ -246,64 +253,58 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                       }
                       value={isBlogTypeSelected}
                     />
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {blog.sourceId}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
 
-                  <Typography variant="body2" color="text.secondary" noWrap>
+                  <Typography 
+                      variant="body2" noWrap>
                       {blog.date.split(' ')[0]}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
+                    <Typography 
+                      variant="body2" noWrap>
                       {blog.date.split(' ').slice(1,3).join(' ')}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {blog.slug}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {blog.title}
                     </Typography>
-                  </TableCell>
-                  <TableCell align="right">
+                  </TableCellItem>
+                  <TableCellItem align="right">
                     {getStatusLabel(blog.status)}
-                  </TableCell>
-                  <TableCell align="right">
+                  </TableCellItem>
+                  <TableCellItem align="right">
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {blog.number}
                     </Typography>
-                  </TableCell>
-                  <TableCell align="center">
+                  </TableCellItem>
+                  <TableCellItem align="center">
                       {
                         parseInt(blog.id) % 2 ?
                         <Button variant='contained'
@@ -313,7 +314,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                          color='success' size='small'>Done</Button>:
                         <Button variant='contained' color='error'  size='small'>Translate</Button>
                       }
-                  </TableCell>
+                  </TableCellItem>
                 </TableRow>
               );
             })}

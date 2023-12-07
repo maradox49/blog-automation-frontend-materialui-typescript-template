@@ -23,7 +23,8 @@ import {
   Button,
   Typography,
   useTheme,
-  CardHeader
+  CardHeader,
+  styled
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -36,6 +37,12 @@ interface RecentOrdersTableProps {
   className?: string;
   languages: LanguageType[];
 }
+
+const TableCellItem = styled(TableCell)(
+  ({ theme }) => `
+        color: ${theme.colors.secondary.main};
+`
+);
 
 const applyPagination = (
   languages: LanguageType[],
@@ -136,7 +143,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
               <TableCell>URL</TableCell>
               <TableCell>Username</TableCell>
               <TableCell align="right">Password</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right" sx={{paddingRight: "45px"}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -150,7 +157,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
                   key={language.id}
                   selected={isLanguageTypeSelected}
                 >
-                  <TableCell padding="checkbox">
+                  <TableCellItem padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isLanguageTypeSelected}
@@ -159,54 +166,46 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
                       }
                       value={isLanguageTypeSelected}
                     />
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {language.name}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {language.url}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {language.username}
                     </Typography>
-                  </TableCell>
-                  <TableCell align="right">
+                  </TableCellItem>
+                  <TableCellItem align="right">
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {language.password}
                     </Typography>
-                  </TableCell>
-                  <TableCell align="right">
+                  </TableCellItem>
+                  <TableCellItem align="right">
                     <FormControl sx={{
-                      width: "90px"
+                      width: "100px"
                     }}>
                       <InputLabel id="demo-simple-select-label"></InputLabel>
                       <Select
@@ -225,7 +224,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
                         <MenuItem value={20}>Edit</MenuItem>
                       </Select>
                     </FormControl>
-                  </TableCell>
+                  </TableCellItem>
                 </TableRow>
               );
             })}

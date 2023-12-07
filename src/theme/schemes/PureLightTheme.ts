@@ -3,7 +3,7 @@ import '@mui/lab/themeAugmentation';
 
 const themeColors = {
   primary: '#0E8A74',
-  secondary: '#6E759F',
+  secondary: '#194039',
   success: '#57CA22',
   warning: '#FFA319',
   error: '#FF1943',
@@ -1176,7 +1176,7 @@ export const PureLightTheme = createTheme({
       fontSize: 14
     },
     body2: {
-      fontSize: 14
+      fontSize: 14,
     },
     button: {
       fontWeight: 600

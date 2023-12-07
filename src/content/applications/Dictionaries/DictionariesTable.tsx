@@ -22,7 +22,8 @@ import {
   MenuItem,
   Typography,
   useTheme,
-  CardHeader
+  CardHeader,
+  styled
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -36,6 +37,11 @@ interface RecentOrdersTableProps {
   dictionaries: DictionaryType[];
 }
 
+const TableCellItem = styled(TableCell)(
+  ({ theme }) => `
+        color: ${theme.colors.secondary.main};
+`
+);
 
 const applyPagination = (
   dictionaries: DictionaryType[],
@@ -127,7 +133,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
               <TableCell>Language</TableCell>
               <TableCell>Bad Entry</TableCell>
               <TableCell>Right Entry</TableCell>
-              <TableCell align="right" sx={{paddingRight: "35px"}}>Actions</TableCell>
+              <TableCell align="right" sx={{paddingRight: "45px"}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -141,7 +147,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
                   key={dictionary.id}
                   selected={isDictionaryTypeSelected}
                 >
-                  <TableCell padding="checkbox">
+                  <TableCellItem padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isDictionaryTypeSelected}
@@ -150,43 +156,37 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
                       }
                       value={isDictionaryTypeSelected}
                     />
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {dictionary.language}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {dictionary.badEntry}
                     </Typography>
-                  </TableCell>
-                  <TableCell>
+                  </TableCellItem>
+                  <TableCellItem>
                     <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
+                      variant="body2"
                       gutterBottom
                       noWrap
                     >
                       {dictionary.rightEntry}
                     </Typography>
-                  </TableCell>
-                  <TableCell align="right">
+                  </TableCellItem>
+                  <TableCellItem align="right">
                     <FormControl sx={{
-                      width: "90px"
+                      width: "100px"
                     }}>
                       <InputLabel id="demo-simple-select-label"></InputLabel>
                       <Select
@@ -205,7 +205,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
                         <MenuItem value={20}>Edit</MenuItem>
                       </Select>
                     </FormControl>
-                  </TableCell>
+                  </TableCellItem>
                 </TableRow>
               );
             })}
