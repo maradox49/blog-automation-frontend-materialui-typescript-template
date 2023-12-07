@@ -47,10 +47,10 @@ function Sidebar() {
           position: 'fixed',
           left: 0,
           top: 0,
-          background:
-            theme.palette.mode === 'dark'
-              ? alpha(lighten(theme.header.background, 0.1), 0.5)
-              : darken(theme.colors.alpha.black[100], 0.5),
+          background: "white",
+            // theme.palette.mode === 'dark'
+            //   ? alpha(lighten(theme.header.background, 0.1), 0.5)
+            //   : darken(theme.colors.alpha.black[100], 0.5),
           boxShadow:
             theme.palette.mode === 'dark' ? theme.sidebar.boxShadow : 'none'
         }}
@@ -71,7 +71,7 @@ function Sidebar() {
             sx={{
               mt: theme.spacing(3),
               mx: theme.spacing(2),
-              background: theme.colors.alpha.trueWhite[10]
+              background: theme.colors.alpha.black[10]
             }}
           />
           <SidebarMenu />
@@ -95,7 +95,7 @@ function Sidebar() {
           </Button>
         </Box> */}
       </SidebarWrapper>
-      <Drawer
+      {/* <Drawer
         sx={{
           boxShadow: `${theme.sidebar.boxShadow}`
         }}
@@ -107,7 +107,7 @@ function Sidebar() {
       >
         <SidebarWrapper
           sx={{
-            background:
+            background: 
               theme.palette.mode === 'dark'
                 ? theme.colors.alpha.white[100]
                 : darken(theme.colors.alpha.black[100], 0.5)
@@ -134,7 +134,7 @@ function Sidebar() {
             <SidebarMenu />
           </Scrollbar>
         </SidebarWrapper>
-      </Drawer>
+      </Drawer> */}
     </>
   );
 }

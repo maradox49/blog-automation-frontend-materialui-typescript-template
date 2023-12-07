@@ -99,7 +99,7 @@ const colors = {
   },
   primary: {
     lighter: lighten(themeColors.primary, 0.85),
-    light: lighten(themeColors.primary, 0.3),
+    light: lighten(themeColors.primary, 0.7),
     main: themeColors.primary,
     dark: darken(themeColors.primary, 0.2)
   },
