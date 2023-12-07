@@ -242,6 +242,23 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
+                  to="/auth/login"
+                  startIcon={<DesignServicesTwoToneIcon />}
+                >
+                  Login
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+        </List>
+        <List component="div">
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
                   to="/overview"
                   startIcon={<DesignServicesTwoToneIcon />}
                 >

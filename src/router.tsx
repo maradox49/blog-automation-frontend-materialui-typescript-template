@@ -6,6 +6,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import Login from './content/pages/Auth/Login';
 
 const Loader = (Component) => (props) =>
   (
@@ -97,6 +98,15 @@ const routes: RouteObject[] = [
       {
         path: 'overview',
         element: <Navigate to="/" replace />
+      },
+      {
+        path: 'auth',
+        children: [
+          {
+            path: 'login',
+            element: <Login />
+          }
+        ]
       },
       {
         path: 'status',
