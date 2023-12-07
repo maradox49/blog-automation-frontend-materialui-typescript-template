@@ -252,7 +252,7 @@ const RecentOrdersTable = () => {
     []
   );
   const selectedBulkActions = selectedBlogTypes.length > 0;
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(-1);
   const [limit, setLimit] = useState<number>(5);
   const [filters, setFilters] = useState<Filters>({
     status: null
@@ -270,6 +270,7 @@ const RecentOrdersTable = () => {
       const loadAllData = async () => {
         await loadDictionary();
         await loadLanguage();
+        loadBlogs(1, limit, "");
       }
       loadAllData();
     }

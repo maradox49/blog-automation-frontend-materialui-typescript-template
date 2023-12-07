@@ -40,16 +40,11 @@ export const BlogProvider: FC = ({ children }) => {
   }
 
   const translate = async (index: number, languageName: string) => {
-    
-    console.log(languages)
-    const language = languages.find(value => (value.name === languageName));
-    return;
     startLoading("Translating...")
     const responseTranslate = await translateBlogService(blogs[index], languageName);
     console.log(responseTranslate)
     stopLoading()
     if (responseTranslate) {
-      console.log(languages)
       const language = languages.find(value => (value.name === languageName));
       if (!language) return;
       startLoading("Sending...")
