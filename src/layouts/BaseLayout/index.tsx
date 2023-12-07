@@ -1,14 +1,22 @@
-import { FC, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/material';
+import { UserContext } from 'src/contexts/UserContext';
 
 interface BaseLayoutProps {
   children?: ReactNode;
 }
 
 const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
+  const { username } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  React.useEffect(()=>{
+    if ( !username ) navigate("/auth/login");
+  }, [])
+  
   return (
     <Box
       sx={{

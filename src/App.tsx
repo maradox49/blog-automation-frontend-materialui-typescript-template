@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
 import router from 'src/router';
 
@@ -9,10 +10,16 @@ import ThemeProvider from './theme/ThemeProvider';
 import { useContext } from 'react';
 import { LoadingContext } from './contexts/LoadingContext';
 import SuspenseLoader from './components/SuspenseLoader';
+import { UserContext } from './contexts/UserContext';
 
 function App() {
   const content = useRoutes(router);
   const { isLoading, loadingMessage } = useContext(LoadingContext);
+  const { autoLogin } = useContext(UserContext);
+
+  // useEffect(()=>{
+  //   autoLogin();
+  // }, [])
 
   return (
     <ThemeProvider>

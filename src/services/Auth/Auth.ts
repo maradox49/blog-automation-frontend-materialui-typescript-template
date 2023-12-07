@@ -2,20 +2,16 @@ import config from "../../config/Global";
 
 export const loginService = async (username: string, password: string) => {
     try {
-        const response = await fetch(`${config.sourceBlogUrl}/posts`, {
-            method: "post",
+        const url = `${config.sourceBlogUrl}/posts`;
+
+        const response = await fetch(url, {
             headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
+                'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+            }
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data;
+            return "success";
         }
         return null;
     } catch (error) {

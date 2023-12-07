@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import {
     Box,
     Typography,
@@ -25,6 +25,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
 import { Password, Person, VpnKey } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
+import { UserContext } from 'src/contexts/UserContext';
 
 const MainContent = styled(Box)(
     () => `
@@ -80,6 +81,22 @@ function Login() {
     };
     const theme = useTheme();
     const navigate = useNavigate();
+    const [_username, setUsername] = useState("");
+    const [_password, setPassword] = useState("");
+    const { username, login } = useContext(UserContext);
+
+    useEffect(()=>{
+        if ( username ) {
+            navigate("/management/blogs");
+        }
+    }, [username])
+
+    const handleLogin = () => {
+        login({
+            username: _username,
+            password: _password
+        })
+    }
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -130,6 +147,8 @@ function Login() {
                                 id="outlined-adornment-amount"
                                 startAdornment={<InputAdornment position="start"><Person color='primary' /></InputAdornment>}
                                 placeholder='Username'
+                                value={_username}
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                             <OutlinedInput
                                 fullWidth
@@ -140,9 +159,11 @@ function Login() {
                                 id="outlined-adornment-amount"
                                 startAdornment={<InputAdornment position="start"><VpnKey color='primary' /></InputAdornment>}
                                 placeholder='Password'
+                                value={_password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
-                            <Button fullWidth variant='contained' 
-                            onClick={()=>navigate("/management/blogs")}
+                            <Button fullWidth variant='contained'
+                                onClick={handleLogin}
                             >LOGIN</Button>
                         </Stack>
                     </Box>

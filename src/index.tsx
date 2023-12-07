@@ -9,20 +9,23 @@ import * as serviceWorker from 'src/serviceWorker';
 import { LoadingProvider } from './contexts/LoadingContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { DictionaryProvider } from './contexts/DictionaryContext';
+import { UserProvider } from './contexts/UserContext';
 
 ReactDOM.render(
   <HelmetProvider>
-    <SidebarProvider>
-      <LoadingProvider>
-        <LanguageProvider>
-          <DictionaryProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-          </DictionaryProvider>
-        </LanguageProvider>
-      </LoadingProvider>
-    </SidebarProvider>
+    <LoadingProvider>
+      <UserProvider>
+        <SidebarProvider>
+          <LanguageProvider>
+            <DictionaryProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </DictionaryProvider>
+          </LanguageProvider>
+        </SidebarProvider>
+      </UserProvider>
+    </LoadingProvider>
   </HelmetProvider>,
   document.getElementById('root')
 );

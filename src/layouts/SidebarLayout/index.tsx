@@ -1,10 +1,11 @@
 import React, { FC, ReactNode } from 'react';
 import { Box, alpha, lighten, useTheme } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { SidebarContext } from 'src/contexts/SidebarContext';
+import { UserContext } from 'src/contexts/UserContext';
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -13,6 +14,12 @@ interface SidebarLayoutProps {
 const SidebarLayout: FC<SidebarLayoutProps> = () => {
   const theme = useTheme();
   const { sidebarToggle } = React.useContext(SidebarContext);
+  const { username } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  React.useEffect(()=>{
+    if ( !username ) navigate("/auth/login");
+  }, [])
 
   return (
     <>
