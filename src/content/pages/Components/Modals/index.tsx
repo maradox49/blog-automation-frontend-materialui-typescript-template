@@ -136,7 +136,7 @@ function Modals() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+      {/* <Footer /> */ }
     </>
   );
 }

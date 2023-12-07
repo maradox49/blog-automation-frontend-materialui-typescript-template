@@ -111,7 +111,7 @@ function Tooltips() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+      {/* <Footer /> */ }
     </>
   );
 }
