@@ -309,10 +309,6 @@ const RecentOrdersTable = () => {
     selectedLanguageTypes.length === languages.length;
   const theme = useTheme();
 
-  useEffect(() => {
-    loadLanguage();
-  }, []);
-
   return (
     <Card>
       {/* {selectedBulkActions && (

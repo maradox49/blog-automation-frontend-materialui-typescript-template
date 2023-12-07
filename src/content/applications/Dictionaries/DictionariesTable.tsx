@@ -236,10 +236,6 @@ const RecentOrdersTable = () => {
     setSelectedValue(value);
   };
 
-  useEffect(() => {
-    loadDictionary();
-  }, [])
-
   const handleEditDictionary = async (dictionary: DictionaryType) => {
     setEditDictionary(dictionary);
     handleClickOpen();

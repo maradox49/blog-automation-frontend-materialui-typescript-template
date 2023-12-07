@@ -11,15 +11,23 @@ import { useContext } from 'react';
 import { LoadingContext } from './contexts/LoadingContext';
 import SuspenseLoader from './components/SuspenseLoader';
 import { UserContext } from './contexts/UserContext';
+import { LanguageContext } from './contexts/LanguageContext';
+import { DictionaryContext } from './contexts/DictionaryContext';
 
 function App() {
   const content = useRoutes(router);
   const { isLoading, loadingMessage } = useContext(LoadingContext);
-  const { autoLogin } = useContext(UserContext);
+  // const { autoLogin } = useContext(UserContext);
+  // const { loadLanguage } = useContext(LanguageContext);
+  // const { loadDictionary } = useContext(DictionaryContext);
+  // const { username } = useContext(UserContext);
 
   // useEffect(()=>{
-  //   autoLogin();
-  // }, [])
+  //   if ( username ) {
+  //     loadLanguage();
+  //     loadDictionary();
+  //   }
+  // }, [username])
 
   return (
     <ThemeProvider>

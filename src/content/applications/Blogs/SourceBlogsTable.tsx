@@ -36,6 +36,7 @@ import { DoneAll, Link, Send, Translate, Language } from '@mui/icons-material';
 import { BlogContext } from 'src/contexts/BlogContext';
 import { UserContext } from 'src/contexts/UserContext';
 import { LanguageContext } from 'src/contexts/LanguageContext';
+import { DictionaryContext } from 'src/contexts/DictionaryContext';
 
 interface SourceBlogsTable {
   className?: string;
@@ -110,9 +111,10 @@ const LabelBox = styled(Box)(
 )
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open, status } = props;
+  const { onClose, selectedValue, open, status, statusId } = props;
   const theme = useTheme()
   const { languages } = useContext(LanguageContext);
+  const { translate } = useContext(BlogContext);
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -121,6 +123,11 @@ function SimpleDialog(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+
+  const handleTranslate = (lang: string) => {
+    onClose("")
+    translate(statusId, lang);
+  }
 
   const getBlogUrl = (language: string, targetId: string) => {
     console.log(language, targetId);
@@ -183,7 +190,7 @@ function SimpleDialog(props) {
         <Box padding={"40px"} paddingTop={"100px"} paddingBottom={"30px"} textAlign={"center"}>
           <Grid container spacing={2}>
             {
-              status.map((detail: BlogStatusType) => {
+              status?.map((detail: BlogStatusType) => {
                 return (
                   <>
                     <Grid item sm={5}>
@@ -206,7 +213,12 @@ function SimpleDialog(props) {
                           </Button>
                         </Grid> :
                         <Grid item sm={7}>
-                          <Button endIcon={<Translate />} fullWidth variant='contained' color='primary'>
+                          <Button
+                            onClick={() => handleTranslate(detail.language)}
+                            endIcon={<Translate />}
+                            fullWidth
+                            variant='contained'
+                            color='primary'>
                             Translate
                           </Button>
                         </Grid>
@@ -231,7 +243,8 @@ SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
-  status: PropTypes.array.isRequired
+  status: PropTypes.array.isRequired,
+  statusId: PropTypes.number.isRequired
 };
 
 const RecentOrdersTable = () => {
@@ -249,10 +262,16 @@ const RecentOrdersTable = () => {
   const { blogs, loadBlogs, blogCount, search, blogStatus } = useContext(BlogContext);
   const { username } = useContext(UserContext);
   const [viewStatusId, setViewStatusId] = useState(-1);
+  const { loadLanguage } = useContext(LanguageContext);
+  const { loadDictionary } = useContext(DictionaryContext);
 
   useEffect(() => {
     if (username) {
-      loadBlogs(page + 1, limit, search);
+      const loadAllData = async () => {
+        await loadDictionary();
+        await loadLanguage();
+      }
+      loadAllData();
     }
   }, [username])
 
@@ -544,6 +563,7 @@ const RecentOrdersTable = () => {
         open={open}
         onClose={handleClose}
         status={blogStatus[viewStatusId]}
+        statusId={viewStatusId}
       />
     </Card>
   );
