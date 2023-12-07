@@ -51,7 +51,7 @@ function BulkActions() {
             startIcon={<Translate />}
             variant="contained"
           >
-            Translate All
+            Translate Selected
           </ButtonError>
          </Box>
        {/* <IconButton

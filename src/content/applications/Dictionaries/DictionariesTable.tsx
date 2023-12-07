@@ -9,6 +9,7 @@ import {
   FormControl,
   InputLabel,
   Card,
+  Stack,
   Checkbox,
   IconButton,
   Table,
@@ -133,7 +134,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
               <TableCell>Language</TableCell>
               <TableCell>Bad Entry</TableCell>
               <TableCell>Right Entry</TableCell>
-              <TableCell align="right" sx={{paddingRight: "45px"}}>Actions</TableCell>
+              <TableCell align="right" sx={{ paddingRight: "45px" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -213,17 +214,24 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
         </Table>
       </TableContainer>
       <Box p={2}>
-        <TablePagination
-          component="div"
-          count={dictionaries.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
+        <Stack direction="row" justifyContent={"space-between"}>
+          <Box>
+            {selectedBulkActions && (
+              <BulkActions />
+            )}
+          </Box>
+          <TablePagination
+            component="div"
+            count={dictionaries.length}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleLimitChange}
+            page={page}
+            rowsPerPage={limit}
+            rowsPerPageOptions={[5, 10, 25, 30]}
+          />
+        </Stack>
       </Box>
-    </Card>
+    </Card >
   );
 };
 

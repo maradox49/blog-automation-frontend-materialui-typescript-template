@@ -14,6 +14,7 @@ import { styled } from '@mui/material/styles';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
+import { Delete } from '@mui/icons-material';
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -41,19 +42,18 @@ function BulkActions() {
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box display="flex" alignItems="center">
-          <Typography variant="h5" color="text.secondary">
-            Bulk actions:
-          </Typography>
-          <ButtonError
-            sx={{ ml: 1 }}
-            startIcon={<DeleteTwoToneIcon />}
-            variant="contained"
-          >
-            Delete
-          </ButtonError>
-        </Box>
-        <IconButton
+        <Typography variant="h5" color="text.secondary">
+          Bulk actions:
+        </Typography>
+        <ButtonError
+          sx={{ ml: 1 }}
+          startIcon={<Delete />}
+          variant="contained"
+        >
+          Delete Selected
+        </ButtonError>
+      </Box>
+    {/* <IconButton
           color="primary"
           onClick={openMenu}
           ref={moreRef}
@@ -85,7 +85,7 @@ function BulkActions() {
             <ListItemText primary="Bulk edit selected" />
           </ListItem>
         </List>
-      </Menu>
+      </Menu> */}
     </>
   );
 }

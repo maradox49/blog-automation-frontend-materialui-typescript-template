@@ -12,6 +12,7 @@ import {
   Checkbox,
   IconButton,
   Table,
+  Stack,
   TableBody,
   TableCell,
   TableHead,
@@ -143,7 +144,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
               <TableCell>URL</TableCell>
               <TableCell>Username</TableCell>
               <TableCell align="right">Password</TableCell>
-              <TableCell align="right" sx={{paddingRight: "45px"}}>Actions</TableCell>
+              <TableCell align="right" sx={{ paddingRight: "45px" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -232,15 +233,22 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
         </Table>
       </TableContainer>
       <Box p={2}>
-        <TablePagination
-          component="div"
-          count={languages.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
+        <Stack direction="row" justifyContent={"space-between"}>
+          <Box>
+            {selectedBulkActions && (
+              <BulkActions />
+            )}
+          </Box>
+          <TablePagination
+            component="div"
+            count={languages.length}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleLimitChange}
+            page={page}
+            rowsPerPage={limit}
+            rowsPerPageOptions={[5, 10, 25, 30]}
+          />
+          </Stack>
       </Box>
     </Card>
   );
