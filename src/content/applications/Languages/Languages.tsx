@@ -13,7 +13,7 @@ function RecentOrders() {
     },
     {
       id: '2',
-      name: "Germany",
+      name: "German",
       url: "http://germany.com",
       username: "username2",
       password: "password2"

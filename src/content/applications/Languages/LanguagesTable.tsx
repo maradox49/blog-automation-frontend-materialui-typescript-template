@@ -32,7 +32,7 @@ import Label from 'src/components/Label';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
-import { LanguageType } from 'src/models/language';
+import { LanguageName, LanguageType } from 'src/models/language';
 
 interface RecentOrdersTableProps {
   className?: string;
@@ -44,6 +44,32 @@ const TableCellItem = styled(TableCell)(
         color: ${theme.colors.secondary.main};
 `
 );
+
+const ImageWrapper = styled(Box) (
+  ({theme}) => `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+      border-radius: 50%;
+      overflow: hidden;
+
+  `
+)
+
+const getFlagUrl = (language: LanguageName): string => {
+  const map = {
+    English: 'gb',
+    German: 'de',
+    Italian: 'it',
+    Spanish: 'es',
+    Holland: 'nl',
+    French: 'fr'
+  };
+
+  return `/static/images/flag/${map[language]}.png`;
+};
 
 const applyPagination = (
   languages: LanguageType[],
@@ -169,13 +195,9 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
                     />
                   </TableCellItem>
                   <TableCellItem>
-                    <Typography
-                      variant="body2"
-                      gutterBottom
-                      noWrap
-                    >
-                      {language.name}
-                    </Typography>
+                    <ImageWrapper>
+                      <img src={getFlagUrl(language.name)} />
+                    </ImageWrapper>
                   </TableCellItem>
                   <TableCellItem>
                     <Typography

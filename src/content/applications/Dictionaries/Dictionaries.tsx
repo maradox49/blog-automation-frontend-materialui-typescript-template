@@ -9,7 +9,7 @@ function RecentOrders() {
       id: '1', language: "English", badEntry: "super", rightEntry: "super"
     },
     {
-      id: '2', language: "Spanish", badEntry: "hello", rightEntry: "hello"
+      id: '2', language: "French", badEntry: "hello", rightEntry: "hello"
     },
     {
       id: '3', language: "French", badEntry: "apple", rightEntry: "apple"
@@ -21,31 +21,31 @@ function RecentOrders() {
       id: '5', language: "Italian", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '6', language: "Portuguese", badEntry: "dog", rightEntry: "dog"
+      id: '6', language: "Italian", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '7', language: "Japanese", badEntry: "hello", rightEntry: "hello"
+      id: '7', language: "Italian", badEntry: "hello", rightEntry: "hello"
     },
     {
-      id: '8', language: "Chinese", badEntry: "dog", rightEntry: "dog"
+      id: '8', language: "Italian", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '9', language: "Russian", badEntry: "dog", rightEntry: "dog"
+      id: '9', language: "English", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '10', language: "Arabic", badEntry: "dog", rightEntry: "dog"
+      id: '10', language: "English", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '11', language: "Korean", badEntry: "hello", rightEntry: "hello"
+      id: '11', language: "English", badEntry: "hello", rightEntry: "hello"
     },
     {
-      id: '12', language: "Dutch", badEntry: "dog", rightEntry: "dog"
+      id: '12', language: "German", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '13', language: "Swedish", badEntry: "dog", rightEntry: "dog"
+      id: '13', language: "German", badEntry: "dog", rightEntry: "dog"
     },
     {
-      id: '14', language: "Greek", badEntry: "dog", rightEntry: "dog"
+      id: '14', language: "German", badEntry: "dog", rightEntry: "dog"
     }
   ];
 
