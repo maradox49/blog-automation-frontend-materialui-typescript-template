@@ -116,7 +116,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -126,7 +126,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
           Recent Orders
         </Box>
       )}
-      <Divider />
+      <Divider /> */}
       <TableContainer>
         <Table>
           <TableHead>

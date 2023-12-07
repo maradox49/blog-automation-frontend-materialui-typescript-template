@@ -13,7 +13,9 @@ function ApplicationsTransactions() {
         <title>Dictionaries - Applications</title>
       </Helmet>
       <Stack spacing={4} padding={4} marginTop={5}>
-        <PageHeader />
+        <Box height={55}>
+          <PageHeader />
+        </Box>
         <Box>
           <RecentOrders />
         </Box>

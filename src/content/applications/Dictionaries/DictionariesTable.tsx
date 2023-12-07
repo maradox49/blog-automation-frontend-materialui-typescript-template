@@ -107,7 +107,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -117,7 +117,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ dictionaries }) => {
           title="Recent Orders"
         />
       )}
-      <Divider />
+      <Divider /> */}
       <TableContainer>
         <Table>
           <TableHead>
