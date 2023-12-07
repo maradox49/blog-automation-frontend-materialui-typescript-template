@@ -182,7 +182,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -211,7 +211,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
           title="Source Blogs"
         />
       )}
-      <Divider />
+      <Divider /> */}
       <TableContainer>
         <Table>
           <TableHead>

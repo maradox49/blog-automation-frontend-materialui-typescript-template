@@ -42,7 +42,7 @@ const colors = {
       '0px 1px 4px rgba(85, 105, 255, 0.25), 0px 3px 12px 2px rgba(85, 105, 255, 0.35)',
     warning:
       '0px 1px 4px rgba(255, 163, 25, 0.25), 0px 3px 12px 2px rgba(255, 163, 25, 0.35)',
-    card: '0px 9px 16px rgba(159, 162, 191, .18), 0px 2px 2px rgba(159, 162, 191, 0.32)',
+    card: '0px 9px 16px rgba(159, 162, 191, .18), 0px 1px 1px rgba(240, 200, 191, 0.12)',
     cardSm:
       '0px 2px 3px rgba(159, 162, 191, .18), 0px 1px 1px rgba(159, 162, 191, 0.32)',
     cardLg:
@@ -50,7 +50,7 @@ const colors = {
   },
   layout: {
     general: {
-      bodyBg: '#fefefe'
+      bodyBg: '#fbfbfb'
     },
     sidebar: {
       background: themeColors.white,
@@ -954,7 +954,7 @@ export const PureLightTheme = createTheme({
     MuiTableRow: {
       styleOverrides: {
         head: {
-          background: colors.alpha.black[5]
+          background: colors.alpha.white["100"]
         },
         root: {
           transition: 'background-color .2s',
