@@ -22,7 +22,9 @@ import {
   Typography,
   useTheme,
   CardHeader,
-  styled
+  styled,
+  Dialog,
+  Grid
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -30,7 +32,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { BlogStatus, BlogType } from 'src/models/blog';
-import { DoneAll, Translate } from '@mui/icons-material';
+import { DoneAll, Link, Send, Translate } from '@mui/icons-material';
 
 interface SourceBlogsTable {
   className?: string;
@@ -91,6 +93,169 @@ const TableCellItem = styled(TableCell)(
 `
 );
 
+const LabelBox = styled(Box)(
+  ({ theme }) => `
+  background: white;
+  color: ${theme.colors.primary.main};
+  width: 100%;
+  height: 100%; 
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  `
+)
+
+function SimpleDialog(props) {
+  const { onClose, selectedValue, open } = props;
+  const theme = useTheme()
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+
+  return (
+    <Dialog
+      onClose={handleClose} open={open}>
+      <Box
+        sx={{
+          "width": "369px",
+          // "height": "510px",
+          "background": "linear-gradient(139deg, #0E8A74 23.19%, #26C58B 104.35%)",
+          "position": "relative",
+          "overflow": "hidden"
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "255.429px",
+            height: "427.169px",
+            top: "-100px",
+            right: "-100px",
+            flexShrink: 0,
+            borderRadius: "100%",
+            background: "rgba(205, 255, 242, 0.10)"
+          }}
+        ></Box>
+        <Box sx={{
+          position: "absolute",
+          top: "33px",
+          left: "30px"
+        }}
+        ><img src="/static/images/languages/wave.png" width={"35px"} /></Box>
+        {/* <Box sx={{
+          position: "absolute",
+          bottom: "30px",
+          right: "27px"
+        }}
+        ><img src="/static/images/languages/vector.png" width={"35px"}/></Box> */}
+        <Box sx={{
+          position: "absolute",
+          top: "35px",
+          left: "120px"
+        }}>
+          <Typography fontFamily={"Poppins"} fontWeight={"500"} fontSize={"17px"} color={"white"}>
+            Automation Status
+          </Typography>
+        </Box>
+        <Box padding={"40px"} paddingTop={"100px"} paddingBottom={"30px"} textAlign={"center"}>
+          <Grid container spacing={2}>
+          <Grid item sm={5}>
+              <LabelBox>
+                <Typography variant='h4'>
+                  German
+                </Typography>
+              </LabelBox>
+            </Grid>
+            <Grid item sm={7}>
+              <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
+                View
+              </Button>
+            </Grid>
+            <Grid item sm={5}>
+              <LabelBox>
+                <Typography variant='h4'>
+                  Italian
+                </Typography>
+              </LabelBox>
+            </Grid>
+            <Grid item sm={7}>
+              <Button endIcon={<Translate />} fullWidth variant='contained' color='primary'>
+                Translate
+              </Button>
+            </Grid>
+            <Grid item sm={5}>
+              <LabelBox>
+                <Typography variant='h4'>
+                  French
+                </Typography>
+              </LabelBox>
+            </Grid>
+            <Grid item sm={7}>
+              <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
+                View
+              </Button>
+            </Grid>
+            
+          </Grid>
+          {/* <Stack direction={"column"} spacing={2}>
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Language'
+            />
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='URL'
+            />
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Username'
+            />
+            <OutlinedInput fullWidth
+              sx={{
+                "& fieldset": { border: 'none' },
+                background: "white",
+                padding: "5px"
+              }}
+              id="outlined-adornment-amount"
+              placeholder='Password'
+            />
+          </Stack> */}
+          <Box paddingTop={"33px"}>
+            <Button sx={{ width: "200px" }} variant='contained' color='primary' endIcon={<Translate />}>Translate All</Button>
+          </Box>
+        </Box>
+      </Box>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired
+};
+
 const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
   const [selectedBlogTypes, setSelectedBlogTypes] = useState<string[]>(
     []
@@ -101,6 +266,18 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
   const [filters, setFilters] = useState<Filters>({
     status: null
   });
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("hello");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
 
   const statusOptions = [
     {
@@ -308,7 +485,9 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                   <TableCellItem align="center">
                     {
                       parseInt(blog.id) % 2 ?
-                        <Button variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<DoneAll />} color='primary' size='small'>&nbsp;&nbsp;&nbsp;Done</Button> :
+                        <Button
+                          onClick={handleClickOpen}
+                          variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<DoneAll />} color='primary' size='small'>&nbsp;&nbsp;&nbsp;Done</Button> :
                         <Button variant='contained' sx={{ width: "120px", justifyContent: "flex-start" }} startIcon={<Translate />} color='error' size='small'>Translate</Button>
                     }
                   </TableCellItem>
@@ -336,6 +515,12 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
           />
         </Stack>
       </Box>
+
+      <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
     </Card>
   );
 };
