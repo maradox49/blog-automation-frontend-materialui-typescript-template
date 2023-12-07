@@ -6,6 +6,7 @@ type UserContext = {
     password: string,
     autoLogin: () => void,
     login: (any) => void,
+    logout: () => void
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -39,9 +40,14 @@ export const UserProvider: FC = ({ children }) => {
         loginUser(userInfo.username, userInfo.password)
     }
 
+    const logout = () => {
+        setUsername("");
+        setPassword("")
+    }
+
   return (
     <UserContext.Provider
-      value={{ username, password, login, autoLogin }}
+      value={{ username, password, login, autoLogin, logout }}
     >
       {children}
     </UserContext.Provider>

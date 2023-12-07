@@ -15,8 +15,8 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
 
   React.useEffect(()=>{
     if ( !username ) navigate("/auth/login");
-  }, [])
-  
+  }, [username])
+
   return (
     <Box
       sx={{

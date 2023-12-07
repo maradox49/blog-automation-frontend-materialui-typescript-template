@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import { Language, Person, Translate, Widgets } from '@mui/icons-material';
+import { UserContext } from 'src/contexts/UserContext';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -62,12 +63,14 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
+  const { username } = useContext(UserContext);
   const user = {
-    name: '@gracephilipse',
+    name: '@' + username,
     avatar: '/static/images/avatars/1.jpg',
     jobtitle: 'Super Admin'
   };
   const navigate = useNavigate();
+  const { logout } = useContext(UserContext);
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -79,6 +82,10 @@ function HeaderUserbox() {
   const handleClose = (): void => {
     setOpen(false);
   };
+
+  const handleSignOut = () => {
+    logout();
+  }
 
   return (
     <>
@@ -145,7 +152,7 @@ function HeaderUserbox() {
         <Divider />
         <Box sx={{ m: 1 }}>
           <Button 
-          onClick={()=>navigate("/auth/login")}
+          onClick={handleSignOut}
           color="primary" fullWidth>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Sign out

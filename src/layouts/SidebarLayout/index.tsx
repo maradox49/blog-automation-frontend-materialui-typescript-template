@@ -19,7 +19,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
 
   React.useEffect(()=>{
     if ( !username ) navigate("/auth/login");
-  }, [])
+  }, [username])
 
   return (
     <>
