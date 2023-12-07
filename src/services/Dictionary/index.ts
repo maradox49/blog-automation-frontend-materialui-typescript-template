@@ -1,5 +1,5 @@
 import config from "../../config/Global";
-import { DictionaryType as Dictionary } from '../../config/Types';
+import { DictionaryType } from "src/models/dictionary";
 
 export const getAllDictionaryService = async () => {
     try {
@@ -18,7 +18,7 @@ export const getAllDictionaryService = async () => {
     }
 }
 
-export const createDictionaryService = async (dictionary: Dictionary) => {
+export const createDictionaryService = async (dictionary: DictionaryType) => {
     try {
         const url = `${config.baseUrl}/dictionary/`;
         const response = await fetch(url, {
@@ -53,7 +53,7 @@ export const getDictionaryByIdService = async (id: number) => {
     }
 }
 
-export const updateDictionaryService = async (dictionary: Dictionary) => {
+export const updateDictionaryService = async (dictionary: DictionaryType) => {
     try {
         const url = `${config.baseUrl}/dictionary/${dictionary.id}`;
         const response = await fetch(url, {
@@ -72,7 +72,7 @@ export const updateDictionaryService = async (dictionary: Dictionary) => {
     }
 }
 
-export const deleteDictionaryService = async (id: number) => {
+export const deleteDictionaryService = async (id: string) => {
     try {
         const url = `${config.baseUrl}/dictionary/${id}`;
         const response = await fetch(url, { method: 'DELETE' });

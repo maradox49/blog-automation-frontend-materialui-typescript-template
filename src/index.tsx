@@ -8,15 +8,18 @@ import { SidebarProvider } from 'src/contexts/SidebarContext';
 import * as serviceWorker from 'src/serviceWorker';
 import { LoadingProvider } from './contexts/LoadingContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { DictionaryProvider } from './contexts/DictionaryContext';
 
 ReactDOM.render(
   <HelmetProvider>
     <SidebarProvider>
       <LoadingProvider>
         <LanguageProvider>
+          <DictionaryProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
+          </DictionaryProvider>
         </LanguageProvider>
       </LoadingProvider>
     </SidebarProvider>
