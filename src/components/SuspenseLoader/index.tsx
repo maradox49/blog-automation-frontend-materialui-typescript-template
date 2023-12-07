@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import NProgress from 'nprogress';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 function SuspenseLoader() {
   useEffect(() => {
@@ -18,13 +18,19 @@ function SuspenseLoader() {
         left: 0,
         top: 0,
         width: '100%',
-        height: '100%'
+        height: '100%',
+        background: "rgba(252,252,252,0.8)",
+        zIndex: 1000
       }}
       display="flex"
       alignItems="center"
       justifyContent="center"
+      flexDirection="column"
     >
-      <CircularProgress size={64} disableShrink thickness={3} />
+      <Box><CircularProgress size={72} disableShrink thickness={3} /></Box>
+      <Typography variant='h2' color='primary'>
+        Translating...
+      </Typography>
     </Box>
   );
 }

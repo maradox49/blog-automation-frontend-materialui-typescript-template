@@ -15,6 +15,7 @@ import { styled } from '@mui/material/styles';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 import { Translate } from '@mui/icons-material';
+import SuspenseLoader from 'src/components/SuspenseLoader';
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -30,6 +31,7 @@ const ButtonError = styled(Button)(
 function BulkActions() {
   const [onMenuOpen, menuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
+  const [isLoading, setLoading] = useState(false);
 
   const openMenu = (): void => {
     menuOpen(true);
@@ -43,6 +45,7 @@ function BulkActions() {
     <>
       {/* <Box display="flex" alignItems="center" justifyContent="space-between">*/}
         <Box display="flex" alignItems="center">
+          { isLoading && <SuspenseLoader />}
           <Typography variant="h5" color="text.secondary">
             Bulk actions:
           </Typography> 
@@ -50,6 +53,7 @@ function BulkActions() {
             sx={{ ml: 1 }}
             startIcon={<Translate />}
             variant="contained"
+            onClick={()=>setLoading(true)}
           >
             Translate Selected
           </ButtonError>
