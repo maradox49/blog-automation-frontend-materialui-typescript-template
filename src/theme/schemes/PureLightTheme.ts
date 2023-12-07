@@ -50,7 +50,7 @@ const colors = {
   },
   layout: {
     general: {
-      bodyBg: '#f2f5f9'
+      bodyBg: '#fefefe'
     },
     sidebar: {
       background: themeColors.white,
