@@ -69,13 +69,13 @@ function SimpleDialog(props) {
   };
 
   const handleUpdateDictionary = () => {
+    onClose("")
     editDictionary({
       id: dictionary.id,
       language: language,
       badEntry: badEntry,
       rightEntry: rightEntry
     })
-    onClose("")
   }
 
   return (

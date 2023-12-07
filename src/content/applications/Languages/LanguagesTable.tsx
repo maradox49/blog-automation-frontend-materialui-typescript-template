@@ -66,6 +66,7 @@ function SimpleDialog(props) {
   };
 
   const handleUpdateLanguage = async () => {
+    handleClose();
     await editLanguage(
       {
         id: language.id,
@@ -74,7 +75,6 @@ function SimpleDialog(props) {
         username: username,
         password: password
       })
-    handleClose();
   }
 
   return (

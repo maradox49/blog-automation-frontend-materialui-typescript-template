@@ -24,13 +24,13 @@ function SimpleDialog(props) {
   };
 
   const handleAddLanguage = async () => {
+    handleClose();
     await addLanguage({
       name: lang,
       url,
       username,
       password
     })
-    handleClose();
   }
 
   return (

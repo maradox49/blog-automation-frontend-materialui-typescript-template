@@ -32,12 +32,12 @@ function SimpleDialog(props) {
   };
 
   const handleAddDictionary = () => {
+    onClose("")
     addDictionary({
       language: language,
       badEntry: badEntry,
       rightEntry: rightEntry
     })
-    onClose("")
   }
 
   return (
