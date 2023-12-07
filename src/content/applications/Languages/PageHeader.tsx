@@ -59,7 +59,7 @@ function SimpleDialog(props) {
           left: "120px"
         }}>
           <Typography fontFamily={"Poppins"} fontWeight={"500"} fontSize={"17px"} color={"white"}>
-            Add a language
+            Add Language
           </Typography>
         </Box>
         <Box padding={"40px"} paddingTop={"100px"} textAlign={"center"}>
