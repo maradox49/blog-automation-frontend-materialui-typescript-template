@@ -44,7 +44,7 @@ function Sidebar() {
             xs: 'none',
             lg: 'inline-block'
           },
-          borderRight: "1px solid #f0f0f0",
+          borderRight: "2px solid #f0f0f0",
           position: 'fixed',
           left: 0,
           top: 0,
