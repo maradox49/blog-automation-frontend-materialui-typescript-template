@@ -72,7 +72,7 @@ export const updateLanguageService = async (language: LanguageType) => {
     }
 }
 
-export const deleteLanguageService = async (id: number) => {
+export const deleteLanguageService = async (id: string) => {
     try {
         const url = `${ config.baseUrl }/language/${ id }`; 
         const response = await fetch(url, { method: 'DELETE' });
