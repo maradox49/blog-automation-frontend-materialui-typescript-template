@@ -32,9 +32,10 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { BlogStatus, BlogStatusType, BlogType } from 'src/models/blog';
-import { DoneAll, Link, Send, Translate } from '@mui/icons-material';
+import { DoneAll, Link, Send, Translate, Language } from '@mui/icons-material';
 import { BlogContext } from 'src/contexts/BlogContext';
 import { UserContext } from 'src/contexts/UserContext';
+import { LanguageContext } from 'src/contexts/LanguageContext';
 
 interface SourceBlogsTable {
   className?: string;
@@ -111,6 +112,7 @@ const LabelBox = styled(Box)(
 function SimpleDialog(props) {
   const { onClose, selectedValue, open, status } = props;
   const theme = useTheme()
+  const { languages } = useContext(LanguageContext);
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -119,6 +121,19 @@ function SimpleDialog(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+
+  const getBlogUrl = (language: string, targetId: string) => {
+    console.log(language, targetId);
+    const url = languages.find(value => (value.name === language))?.url;
+    if (url) {
+      return url.replace("wp-json/wp/v2/posts", `?p=${targetId}`);
+    }
+    return "";
+  }
+
+  const viewTargetBlog = (url: string) => {
+    window.open(url, '_blank');
+  }
 
   return (
     <Dialog
@@ -181,7 +196,12 @@ function SimpleDialog(props) {
                     {
                       detail.sent ?
                         <Grid item sm={7}>
-                          <Button endIcon={<Link />} fullWidth variant='contained' color='primary'>
+                          <Button
+                            onClick={() => viewTargetBlog(getBlogUrl(detail.language, detail.targetId))}
+                            endIcon={<Link />}
+                            fullWidth
+                            variant='contained'
+                            color='primary'>
                             View
                           </Button>
                         </Grid> :
