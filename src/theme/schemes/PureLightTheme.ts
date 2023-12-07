@@ -960,7 +960,7 @@ export const PureLightTheme = createTheme({
           transition: 'background-color .2s',
 
           '&.MuiTableRow-hover:hover': {
-            backgroundColor: colors.alpha.black[5]
+            backgroundColor: colors.alpha.black[25]
           }
         }
       }
