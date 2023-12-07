@@ -10,6 +10,7 @@ import { LoadingProvider } from './contexts/LoadingContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { DictionaryProvider } from './contexts/DictionaryContext';
 import { UserProvider } from './contexts/UserContext';
+import { BlogProvider } from './contexts/BlogContext';
 
 ReactDOM.render(
   <HelmetProvider>
@@ -18,9 +19,11 @@ ReactDOM.render(
         <SidebarProvider>
           <LanguageProvider>
             <DictionaryProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <BlogProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </BlogProvider>
             </DictionaryProvider>
           </LanguageProvider>
         </SidebarProvider>

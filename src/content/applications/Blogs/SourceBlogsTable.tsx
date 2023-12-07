@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Stack,
@@ -33,6 +33,8 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { BlogStatus, BlogType } from 'src/models/blog';
 import { DoneAll, Link, Send, Translate } from '@mui/icons-material';
+import { BlogContext } from 'src/contexts/BlogContext';
+import { UserContext } from 'src/contexts/UserContext';
 
 interface SourceBlogsTable {
   className?: string;
@@ -256,7 +258,7 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired
 };
 
-const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
+const RecentOrdersTable = () => {
   const [selectedBlogTypes, setSelectedBlogTypes] = useState<string[]>(
     []
   );
@@ -268,6 +270,31 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
   });
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("hello");
+  const { blogs, loadBlogs, blogCount, search } = useContext(BlogContext);
+  const { username } = useContext(UserContext);
+
+  useEffect(()=>{
+    if ( username ) {
+      loadBlogs(page+1, limit, search);
+    }
+  }, [username])
+
+  useEffect(()=>{
+    const possiblePageCount = Math.ceil(blogCount/limit);
+    console.log(page, search, limit, blogCount)
+    if ( possiblePageCount === 0 ) {
+      if ( page === 0 ) {
+        loadBlogs(1, limit, search);
+      } else 
+        setPage(0);
+    }
+    else if ( page >= possiblePageCount )
+      setPage(possiblePageCount-1);
+    else if ( page < 0 )
+      setPage(0);
+    else
+      loadBlogs(page+1, limit, search);
+  }, [search, page, limit])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -277,7 +304,6 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
     setOpen(false);
     setSelectedValue(value);
   };
-
 
   const statusOptions = [
     {
@@ -412,7 +438,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedBlogs.map((blog) => {
+            {blogs.map((blog) => {
               const isBlogTypeSelected = selectedBlogTypes.includes(
                 blog.id
               );
@@ -438,18 +464,18 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
                       gutterBottom
                       noWrap
                     >
-                      {blog.sourceId}
+                      #{blog.id}
                     </Typography>
                   </TableCellItem>
                   <TableCellItem>
 
                     <Typography
                       variant="body2" noWrap>
-                      {blog.date.split(' ')[0]}
+                      {blog.date.split('T')[0]}
                     </Typography>
                     <Typography
                       variant="body2" noWrap>
-                      {blog.date.split(' ').slice(1, 3).join(' ')}
+                      {blog.date.split('T')[1]}
                     </Typography>
                   </TableCellItem>
                   <TableCellItem>
@@ -506,7 +532,7 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
           </Box>
           <TablePagination
             component="div"
-            count={filteredBlogTypes.length}
+            count={blogCount}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleLimitChange}
             page={page}
@@ -525,12 +551,12 @@ const RecentOrdersTable: FC<SourceBlogsTable> = ({ blogs }) => {
   );
 };
 
-RecentOrdersTable.propTypes = {
-  blogs: PropTypes.array.isRequired
-};
+// RecentOrdersTable.propTypes = {
+//   blogs: PropTypes.array.isRequired
+// };
 
-RecentOrdersTable.defaultProps = {
-  blogs: []
-};
+// RecentOrdersTable.defaultProps = {
+//   blogs: []
+// };
 
 export default RecentOrdersTable;
