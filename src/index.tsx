@@ -7,14 +7,17 @@ import App from 'src/App';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import * as serviceWorker from 'src/serviceWorker';
 import { LoadingProvider } from './contexts/LoadingContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 ReactDOM.render(
   <HelmetProvider>
     <SidebarProvider>
       <LoadingProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <LanguageProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </LanguageProvider>
       </LoadingProvider>
     </SidebarProvider>
   </HelmetProvider>,

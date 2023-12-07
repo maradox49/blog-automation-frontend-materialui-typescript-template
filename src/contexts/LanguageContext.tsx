@@ -5,7 +5,7 @@ type LanguageContext = {
     languages: LanguageType[],
     load: () => void,
     add: (LanguageType) => void,
-    delete: (string) => void,
+    remove: (string) => void,
     edit: (string, LanguageType) => void
 };
 
@@ -27,9 +27,31 @@ export const LanguageProvider: FC = ({ children }) => {
         }
     }
 
+    const add = async (language: LanguageType) => {
+        setLanguages([
+            ...languages,
+            language
+        ])
+    }
+
+    const remove = async ( id: string ) => {
+        setLanguages(languages.filter(
+            language => (language.id !== id)
+        ))
+    }
+
+    const edit = async ( id: string, language: LanguageType ) => {
+        setLanguages(languages.map(
+            language => {
+                if ( language.id === id ) return language;
+                return 
+            }
+        ))
+    }
+
   return (
     <LanguageContext.Provider
-      value={{ isLoading, loadingMessage, startLoading, stopLoading }}
+      value={{ languages, load, add, edit, remove }}
     >
       {children}
     </LanguageContext.Provider>
