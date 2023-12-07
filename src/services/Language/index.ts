@@ -1,5 +1,5 @@
+import { LanguageType } from "src/models/language";
 import config from "../../config/Global";
-import { LanguageType } from '../../config/Types';
 
 export const getAllLanguageService = async () => {
     try {

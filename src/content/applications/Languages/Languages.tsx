@@ -29,7 +29,7 @@ function RecentOrders() {
 
   return (
     <Card>
-      <LanguagesTable languages={languages} />
+      <LanguagesTable/>
     </Card>
   );
 }

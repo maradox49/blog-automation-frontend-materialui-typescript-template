@@ -34,10 +34,10 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { LanguageName, LanguageType } from 'src/models/language';
 
-interface RecentOrdersTableProps {
-  className?: string;
-  languages: LanguageType[];
-}
+// interface RecentOrdersTableProps {
+//   className?: string;
+//   languages: LanguageType[];
+// }
 
 const TableCellItem = styled(TableCell)(
   ({ theme }) => `
@@ -79,13 +79,14 @@ const applyPagination = (
   return languages.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
+const RecentOrdersTable = () => {
   const [selectedLanguageTypes, setSelectedLanguageTypes] = useState<string[]>(
     []
   );
   const selectedBulkActions = selectedLanguageTypes.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
+  const [languages, setLanguages] = useState<LanguageType[]>([])
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
@@ -276,12 +277,12 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ languages }) => {
   );
 };
 
-RecentOrdersTable.propTypes = {
-  languages: PropTypes.array.isRequired
-};
+// RecentOrdersTable.propTypes = {
+//   languages: PropTypes.array.isRequired
+// };
 
-RecentOrdersTable.defaultProps = {
-  languages: []
-};
+// RecentOrdersTable.defaultProps = {
+//   languages: []
+// };
 
 export default RecentOrdersTable;
