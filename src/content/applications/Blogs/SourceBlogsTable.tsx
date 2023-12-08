@@ -253,7 +253,7 @@ const RecentOrdersTable = () => {
   );
   const selectedBulkActions = selectedBlogTypes.length > 0;
   const [page, setPage] = useState<number>(-1);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(5);
   const [filters, setFilters] = useState<Filters>({
     status: null
   });
@@ -554,7 +554,7 @@ const RecentOrdersTable = () => {
             onRowsPerPageChange={handleLimitChange}
             page={page}
             rowsPerPage={limit}
-            rowsPerPageOptions={[10, 25, 30]}
+            rowsPerPageOptions={[5, 10, 25, 30]}
           />
         </Stack>
       </Box>

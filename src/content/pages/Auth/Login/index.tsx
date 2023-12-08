@@ -23,7 +23,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
-import { Password, Person, VpnKey } from '@mui/icons-material';
+import { Password, Person, Visibility, VisibilityOff, VpnKey } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import { UserContext } from 'src/contexts/UserContext';
 
@@ -79,14 +79,23 @@ function Login() {
 
         return timeLeft;
     };
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     const theme = useTheme();
     const navigate = useNavigate();
     const [_username, setUsername] = useState("");
     const [_password, setPassword] = useState("");
     const { username, login } = useContext(UserContext);
 
-    useEffect(()=>{
-        if ( username ) {
+    useEffect(() => {
+        if (username) {
             navigate("/management/blogs");
         }
     }, [username])
@@ -151,6 +160,19 @@ function Login() {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                             <OutlinedInput
+                                type={showPassword ? 'text' : 'password'}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
                                 fullWidth
                                 sx={{
                                     "& fieldset": { border: 'none' },

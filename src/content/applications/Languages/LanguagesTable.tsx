@@ -363,9 +363,14 @@ const RecentOrdersTable = () => {
                     />
                   </TableCellItem>
                   <TableCellItem>
-                    <ImageWrapper>
-                      <img src={getFlagUrl(language.name)} />
-                    </ImageWrapper>
+                    <Stack direction={"row"} spacing={1} alignItems={"center"}>
+                      <ImageWrapper>
+                        <img src={getFlagUrl(language.name)} />
+                      </ImageWrapper>
+                      <Box>
+                        {language.name}
+                      </Box>
+                    </Stack>
                   </TableCellItem>
                   <TableCellItem>
                     <Typography
@@ -432,7 +437,7 @@ const RecentOrdersTable = () => {
         <Stack direction="row" justifyContent={"space-between"}>
           <Box>
             {selectedBulkActions && (
-              <BulkActions selected = {selectedLanguageTypes} setSelected={setSelectedLanguageTypes} />
+              <BulkActions selected={selectedLanguageTypes} setSelected={setSelectedLanguageTypes} />
             )}
           </Box>
           <TablePagination
