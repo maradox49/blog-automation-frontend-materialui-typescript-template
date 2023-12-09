@@ -340,9 +340,14 @@ const RecentOrdersTable = () => {
                     />
                   </TableCellItem>
                   <TableCellItem>
-                    <ImageWrapper>
-                      <img src={getFlagUrl(dictionary.language)} />
-                    </ImageWrapper>
+                  <Stack direction={"row"} spacing={1} alignItems={"center"}>
+                      <ImageWrapper>
+                        <img src={getFlagUrl(language.name)} />
+                      </ImageWrapper>
+                      <Box>
+                        {language.name}
+                      </Box>
+                    </Stack>
                   </TableCellItem>
                   <TableCellItem>
                     <Typography
