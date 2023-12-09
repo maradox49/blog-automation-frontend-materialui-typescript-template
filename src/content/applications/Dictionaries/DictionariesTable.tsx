@@ -342,10 +342,10 @@ const RecentOrdersTable = () => {
                   <TableCellItem>
                   <Stack direction={"row"} spacing={1} alignItems={"center"}>
                       <ImageWrapper>
-                        <img src={getFlagUrl(language.name)} />
+                        <img src={getFlagUrl(dictionary.language)} />
                       </ImageWrapper>
                       <Box>
-                        {language.name}
+                        {dictionary.language}
                       </Box>
                     </Stack>
                   </TableCellItem>
