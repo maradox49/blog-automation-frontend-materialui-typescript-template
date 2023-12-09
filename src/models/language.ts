@@ -7,3 +7,5 @@ export interface LanguageType {
   username: string;
   password: string;
 }
+
+export const TargetLanguages = ["Italian", "German", "English", "French", "Holland"];

@@ -6,19 +6,25 @@ import {
   Dialog,
   Box,
   Stack,
-  OutlinedInput
+  OutlinedInput,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { useState, useContext } from 'react';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
+import { TargetLanguages } from 'src/models/language';
+import FlagItem from 'src/components/Flag';
 
 const emails = ["ABCDE", "DEFGH"];
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
-  const [language, setLanguage] = useState("")
+  const [language, setLanguage] = useState(TargetLanguages[0])
   const [badEntry, setBadEntry] = useState("")
   const [rightEntry, setRightEntry] = useState("")
   const { addDictionary } = useContext(DictionaryContext);
@@ -87,7 +93,7 @@ function SimpleDialog(props) {
         </Box>
         <Box padding={"40px"} paddingTop={"100px"} textAlign={"center"}>
           <Stack direction={"column"} spacing={2}>
-            <OutlinedInput fullWidth
+            {/* <OutlinedInput fullWidth
               sx={{
                 "& fieldset": { border: 'none' },
                 background: "white",
@@ -97,7 +103,34 @@ function SimpleDialog(props) {
               placeholder='Language'
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-            />
+            /> */}
+            <FormControl>
+              <InputLabel id="demo-simple-select-label"></InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                sx={{
+                  "& fieldset": { border: 'none' },
+                  background: "white",
+                  padding: "5px",
+                  textAlign: "left"
+                }}
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                {
+                  TargetLanguages.map(lang => {
+                    return (
+                      <MenuItem
+                      key={"123" + lang}
+                        value={lang}>
+                          <FlagItem language={lang} />
+                      </MenuItem>
+                    )
+                  })
+                }
+              </Select>
+            </FormControl>
             <OutlinedInput fullWidth
               sx={{
                 "& fieldset": { border: 'none' },

@@ -32,11 +32,12 @@ import Label from 'src/components/Label';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
-import { LanguageName, LanguageType } from 'src/models/language';
+import { LanguageName, LanguageType, TargetLanguages } from 'src/models/language';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { getAllLanguageService } from 'src/services/Language';
 import { LanguageContext } from 'src/contexts/LanguageContext';
 import { Dialog, OutlinedInput } from '@mui/material';
+import FlagItem from 'src/components/Flag';
 
 // interface RecentOrdersTableProps {
 //   className?: string;
@@ -124,17 +125,33 @@ function SimpleDialog(props) {
         </Box>
         <Box padding={"40px"} paddingTop={"100px"} textAlign={"center"}>
           <Stack direction={"column"} spacing={2}>
-            <OutlinedInput fullWidth
-              sx={{
-                "& fieldset": { border: 'none' },
-                background: "white",
-                padding: "5px"
-              }}
-              id="outlined-adornment-amount"
-              placeholder='Language'
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-            />
+          <FormControl>
+              <InputLabel id="demo-simple-select-label"></InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                sx={{
+                  "& fieldset": { border: 'none' },
+                  background: "white",
+                  padding: "5px",
+                  textAlign: "left"
+                }}
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+              >
+                {
+                  TargetLanguages.map(_lang => {
+                    return (
+                      <MenuItem
+                      key={"123" + _lang}
+                        value={_lang}>
+                          <FlagItem language={_lang} />
+                      </MenuItem>
+                    )
+                  })
+                }
+              </Select>
+            </FormControl>
             <OutlinedInput fullWidth
               sx={{
                 "& fieldset": { border: 'none' },
@@ -194,32 +211,6 @@ const TableCellItem = styled(TableCell)(
         color: ${theme.colors.secondary.main};
 `
 );
-
-const ImageWrapper = styled(Box)(
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25px;
-    height: 25px;
-      border-radius: 50%;
-      overflow: hidden;
-
-  `
-)
-
-const getFlagUrl = (language: LanguageName): string => {
-  const map = {
-    English: 'gb',
-    German: 'de',
-    Italian: 'it',
-    Spanish: 'es',
-    Holland: 'nl',
-    French: 'fr'
-  };
-
-  return `/static/images/flag/${map[language]}.png`;
-};
 
 const applyPagination = (
   languages: LanguageType[],
@@ -364,12 +355,7 @@ const RecentOrdersTable = () => {
                   </TableCellItem>
                   <TableCellItem>
                     <Stack direction={"row"} spacing={1} alignItems={"center"}>
-                      <ImageWrapper>
-                        <img src={getFlagUrl(language.name)} />
-                      </ImageWrapper>
-                      <Box>
-                        {language.name}
-                      </Box>
+                      <FlagItem language={language.name} />
                     </Stack>
                   </TableCellItem>
                   <TableCellItem>
