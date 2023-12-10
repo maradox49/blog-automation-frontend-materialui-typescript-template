@@ -422,14 +422,14 @@ const RecentOrdersTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {/* <TableCell padding="checkbox">
+              <TableCell padding="checkbox">
                 <Checkbox
                   color="primary"
                   checked={selectedAllBlogTypes}
                   indeterminate={selectedSomeBlogTypes}
                   onChange={handleSelectAllBlogTypes}
                 />
-              </TableCell> */}
+              </TableCell>
               <TableCell>ID</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Slug</TableCell>
@@ -450,7 +450,7 @@ const RecentOrdersTable = () => {
                   key={blog.id}
                   selected={isBlogTypeSelected}
                 >
-                  {/* <TableCellItem padding="checkbox">
+                  <TableCellItem padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isBlogTypeSelected}
@@ -459,7 +459,7 @@ const RecentOrdersTable = () => {
                       }
                       value={isBlogTypeSelected}
                     />
-                  </TableCellItem> */}
+                  </TableCellItem>
                   <TableCellItem>
                     <Typography
                       variant="body2"

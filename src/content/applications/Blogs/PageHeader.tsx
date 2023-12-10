@@ -23,7 +23,7 @@ function PageHeader() {
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
         <Typography variant="h2" component="h2" gutterBottom>
-          Blog Listing
+          Content Listing
         </Typography>
       </Grid>
       <Grid item>

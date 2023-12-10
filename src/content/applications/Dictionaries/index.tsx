@@ -22,7 +22,7 @@ function ApplicationsTransactions() {
   return (
     <>
       <Helmet>
-        <title>Dictionaries - Applications</title>
+        <title>Blog automation platform</title>
       </Helmet>
       <Stack spacing={4} padding={4} marginTop={5}>
         <Box height={55}>

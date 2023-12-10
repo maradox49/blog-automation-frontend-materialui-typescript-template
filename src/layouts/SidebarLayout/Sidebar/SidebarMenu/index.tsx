@@ -204,7 +204,7 @@ function SidebarMenu() {
                       to="/management/blogs"
                       startIcon={<WidgetsIcon />}
                     >
-                      Go to blog
+                      Content
                     </Button>
                   </ListItem>
                   <ListItem component="div">
