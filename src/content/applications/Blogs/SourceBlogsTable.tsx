@@ -2,14 +2,10 @@ import { FC, ChangeEvent, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Stack,
-  Divider,
   Box,
-  FormControl,
-  InputLabel,
   Card,
   Checkbox,
   Button,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -17,19 +13,14 @@ import {
   TablePagination,
   TableRow,
   TableContainer,
-  Select,
-  MenuItem,
   Typography,
   useTheme,
-  CardHeader,
   styled,
   Dialog,
   Grid
 } from '@mui/material';
 
 import Label from 'src/components/Label';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { BlogStatus, BlogStatusType, BlogType } from 'src/models/blog';
 import { DoneAll, Link, Send, Translate, Language } from '@mui/icons-material';

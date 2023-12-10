@@ -81,7 +81,7 @@ export const translateBlogService = async (blog: BlogType, language: string) => 
 
 export const sendBlogService = async (blog: BlogType, language: LanguageType) => {
     try {
-        const response = await fetch(language.url, {
+        const response = await fetch(language.url + "/wp-json/wp/v2/posts", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

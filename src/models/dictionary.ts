@@ -1,8 +1,7 @@
-import { LanguageName } from "./language";
 
 export interface DictionaryType {
     id: string;
-    language: LanguageName;
+    language: string;
     badEntry: string;
     rightEntry: string;
 }

@@ -17,14 +17,14 @@ import PropTypes from 'prop-types';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { useState, useContext } from 'react';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
-import { TargetLanguages } from 'src/models/language';
+import { LanguageNameCode } from 'src/models/language';
 import FlagItem from 'src/components/Flag';
 
 const emails = ["ABCDE", "DEFGH"];
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
-  const [language, setLanguage] = useState(TargetLanguages[0])
+  const [language, setLanguage] = useState(LanguageNameCode[0].lang)
   const [badEntry, setBadEntry] = useState("")
   const [rightEntry, setRightEntry] = useState("")
   const { addDictionary } = useContext(DictionaryContext);
@@ -119,12 +119,12 @@ function SimpleDialog(props) {
                 onChange={(e) => setLanguage(e.target.value)}
               >
                 {
-                  TargetLanguages.map(lang => {
+                  LanguageNameCode.map(lang => {
                     return (
                       <MenuItem
-                      key={"123" + lang}
-                        value={lang}>
-                          <FlagItem language={lang} />
+                      key={"123" + lang.lang}
+                        value={lang.lang}>
+                          <FlagItem language={lang.lang} />
                       </MenuItem>
                     )
                   })

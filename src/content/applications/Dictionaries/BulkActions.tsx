@@ -2,21 +2,13 @@ import { useState, useRef, useContext } from 'react';
 
 import {
   Box,
-  Menu,
-  IconButton,
   Button,
-  ListItemText,
-  ListItem,
-  List,
   Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 import { Delete } from '@mui/icons-material';
 import PropTypes from 'prop-types';
-import { deleteDictionaryService } from 'src/services/Dictionary';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
 
 const ButtonError = styled(Button)(

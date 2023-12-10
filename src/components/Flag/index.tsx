@@ -1,39 +1,11 @@
-import { FC, ChangeEvent, useState, useContext, useEffect } from 'react';
-import { format } from 'date-fns';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
-    Tooltip,
-    Divider,
     Box,
-    FormControl,
-    InputLabel,
-    Card,
     Stack,
-    Checkbox,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TablePagination,
-    TableRow,
-    TableContainer,
-    Select,
-    MenuItem,
-    Typography,
-    useTheme,
-    OutlinedInput,
     styled,
-    Dialog
 } from '@mui/material';
 
-import Label from 'src/components/Label';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { DictionaryType } from 'src/models/dictionary';
-import { LanguageName } from 'src/models/language';
-import { DictionaryContext } from 'src/contexts/DictionaryContext';
+import { LanguageNameCode } from 'src/models/language';
 
 const ImageWrapper = styled(Box)(
     ({ theme }) => `
@@ -47,17 +19,10 @@ const ImageWrapper = styled(Box)(
     `
 )
 
-const getFlagUrl = (language: LanguageName): string => {
-    const map = {
-        English: 'gb',
-        German: 'de',
-        Italian: 'it',
-        Spanish: 'es',
-        Holland: 'nl',
-        French: 'fr'
-    };
-
-    return `/static/images/flag/${map[language]}.png`;
+const getFlagUrl = (languageName: string): string => {
+    let langInfo = LanguageNameCode.find(item => (item.lang === languageName));
+    if ( !langInfo ) return "";
+    return `https://flagsapi.com/${langInfo.code}/flat/32.png`;
 };
 
 const FlagItem = (props) => {

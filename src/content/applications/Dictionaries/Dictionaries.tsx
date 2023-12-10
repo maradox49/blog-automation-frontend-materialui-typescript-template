@@ -1,6 +1,5 @@
 import { Card } from '@mui/material';
 import RecentOrdersTable from './DictionariesTable';
-import { subDays } from 'date-fns';
 import { DictionaryType } from 'src/models/dictionary';
 
 function RecentOrders() {

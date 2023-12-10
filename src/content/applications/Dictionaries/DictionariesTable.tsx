@@ -1,10 +1,6 @@
 import { FC, ChangeEvent, useState, useContext, useEffect } from 'react';
-import { format } from 'date-fns';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
-  Tooltip,
-  Divider,
   Box,
   FormControl,
   InputLabel,
@@ -28,12 +24,9 @@ import {
   Dialog
 } from '@mui/material';
 
-import Label from 'src/components/Label';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 import { DictionaryType } from 'src/models/dictionary';
-import { LanguageName, TargetLanguages } from 'src/models/language';
+import {  LanguageNameCode } from 'src/models/language';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
 import FlagItem from 'src/components/Flag';
 
@@ -141,12 +134,12 @@ function SimpleDialog(props) {
                 onChange={(e) => setLanguage(e.target.value)}
               >
                 {
-                  TargetLanguages.map(lang => {
+                  LanguageNameCode.map(lang => {
                     return (
                       <MenuItem
-                      key={"123" + lang}
-                        value={lang}>
-                          <FlagItem language={lang} />
+                      key={"123" + lang.lang}
+                        value={lang.lang}>
+                          <FlagItem language={lang.lang} />
                       </MenuItem>
                     )
                   })

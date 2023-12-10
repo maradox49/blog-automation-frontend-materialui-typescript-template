@@ -1,8 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container, Box, Stack } from '@mui/material';
-import Footer from 'src/components/Footer';
+import {Box, Stack } from '@mui/material';
 
 import RecentOrders from './SourceBlogs';
 

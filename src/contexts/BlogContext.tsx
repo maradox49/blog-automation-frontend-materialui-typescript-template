@@ -45,6 +45,7 @@ export const BlogProvider: FC = ({ children }) => {
     console.log(responseTranslate)
     stopLoading()
     if (responseTranslate) {
+      if ( responseTranslate.title === "error" ) return ;
       const language = languages.find(value => (value.name === languageName));
       if (!language) return;
       startLoading("Sending...")

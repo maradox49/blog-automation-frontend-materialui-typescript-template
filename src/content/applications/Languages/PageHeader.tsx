@@ -1,23 +1,26 @@
 import React from 'react';
-import { Typography, Button, Grid, Dialog, 
+import {
+  Typography, Button, Grid, Dialog,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  DialogTitle, List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, OutlinedInput, InputAdornment, Stack } from '@mui/material';
+  Box,
+  OutlinedInput,
+  Stack
+} from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import { AddIcCallOutlined, PersonPinCircleOutlined, Search } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 import { LanguageContext } from 'src/contexts/LanguageContext';
-import { TargetLanguages } from 'src/models/language';
+import { LanguageNameCode } from 'src/models/language';
 import FlagItem from 'src/components/Flag';
 
 const emails = ["ABCDE", "DEFGH"];
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open, addLanguage } = props;
-  const [lang, setLang] = useState(TargetLanguages[0])
+  const [lang, setLang] = useState(LanguageNameCode[0].lang)
   const [url, setUrl] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -87,7 +90,7 @@ function SimpleDialog(props) {
         </Box>
         <Box padding={"40px"} paddingTop={"100px"} textAlign={"center"}>
           <Stack direction={"column"} spacing={2}>
-          <FormControl>
+            <FormControl>
               <InputLabel id="demo-simple-select-label"></InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -102,12 +105,12 @@ function SimpleDialog(props) {
                 onChange={(e) => setLang(e.target.value)}
               >
                 {
-                  TargetLanguages.map(lang => {
+                  LanguageNameCode.map(lang => {
                     return (
                       <MenuItem
-                      key={"123" + lang}
-                        value={lang}>
-                          <FlagItem language={lang} />
+                        key={"123" + lang.lang}
+                        value={lang.lang}>
+                        <FlagItem language={lang.lang} />
                       </MenuItem>
                     )
                   })

@@ -1,13 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Stack, Box } from '@mui/material';
-import Footer from 'src/components/Footer';
 
 import RecentOrders from './Dictionaries';
-import { useContext, useEffect } from 'react';
-import { BlogContext } from 'src/contexts/BlogContext';
-import { UserContext } from 'src/contexts/UserContext';
 
 function ApplicationsTransactions() {
   // const { loadBlogs } = useContext(BlogContext);

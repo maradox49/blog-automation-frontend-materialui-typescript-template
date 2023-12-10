@@ -1,16 +1,11 @@
 import { FC, ChangeEvent, useState, useEffect, useContext } from 'react';
-import { format } from 'date-fns';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
-  Tooltip,
-  Divider,
   Box,
   FormControl,
   InputLabel,
   Card,
   Checkbox,
-  IconButton,
   Table,
   Stack,
   TableBody,
@@ -24,17 +19,11 @@ import {
   Button,
   Typography,
   useTheme,
-  CardHeader,
   styled
 } from '@mui/material';
 
-import Label from 'src/components/Label';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
-import { LanguageName, LanguageType, TargetLanguages } from 'src/models/language';
-import SuspenseLoader from 'src/components/SuspenseLoader';
-import { getAllLanguageService } from 'src/services/Language';
+import { LanguageNameCode, LanguageType } from 'src/models/language';
 import { LanguageContext } from 'src/contexts/LanguageContext';
 import { Dialog, OutlinedInput } from '@mui/material';
 import FlagItem from 'src/components/Flag';
@@ -140,12 +129,12 @@ function SimpleDialog(props) {
                 onChange={(e) => setLang(e.target.value)}
               >
                 {
-                  TargetLanguages.map(_lang => {
+                  LanguageNameCode.map(lang => {
                     return (
                       <MenuItem
-                      key={"123" + _lang}
-                        value={_lang}>
-                          <FlagItem language={_lang} />
+                      key={"123" + lang.lang}
+                        value={lang.lang}>
+                          <FlagItem language={lang.lang} />
                       </MenuItem>
                     )
                   })

@@ -2,20 +2,12 @@ import { useState, useRef, useContext } from 'react';
 
 import {
   Box,
-  Menu,
-  IconButton,
   Button,
-  ListItemText,
-  ListItem,
-  List,
   Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 import { Translate } from '@mui/icons-material';
-import SuspenseLoader from 'src/components/SuspenseLoader';
 import { LoadingContext } from 'src/contexts/LoadingContext';
 
 const ButtonError = styled(Button)(
