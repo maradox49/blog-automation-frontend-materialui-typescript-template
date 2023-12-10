@@ -124,7 +124,7 @@ function SimpleDialog(props) {
     console.log(language, targetId);
     const url = languages.find(value => (value.name === language))?.url;
     if (url) {
-      return url.replace("wp-json/wp/v2/posts", `?p=${targetId}`);
+      return url + `?p=${targetId}`;
     }
     return "";
   }
