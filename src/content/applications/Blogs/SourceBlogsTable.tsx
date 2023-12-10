@@ -333,11 +333,17 @@ const RecentOrdersTable = () => {
   const handleSelectAllBlogTypes = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    setSelectedBlogTypes(
-      event.target.checked
-        ? blogs.map((blog) => blog.id)
-        : []
-    );
+    if ( event.target.checked ) {
+      const prevSelected = [...selectedBlogTypes];
+      for ( let i = 0 ; i < blogs.length ; i ++ ) {
+        if ( !selectedBlogTypes.find(blogId=>(blogId===blogs[i].id)) ) {
+          prevSelected.push(blogs[i].id);
+        }
+      }
+      setSelectedBlogTypes(prevSelected);
+    } else {
+      setSelectedBlogTypes(selectedBlogTypes.filter(blogId=>(!blogs.find(blog=>(blog.id===blogId)))));
+    }
   };
 
   const handleSelectOneBlogType = (
@@ -371,10 +377,10 @@ const RecentOrdersTable = () => {
     limit
   );
   const selectedSomeBlogTypes =
-    selectedBlogTypes.length > 0 &&
-    selectedBlogTypes.length < blogs.length;
+    selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length > 0 &&
+    selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length < blogs.length;
   const selectedAllBlogTypes =
-    selectedBlogTypes.length === blogs.length;
+  selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length === blogs.length;
   const theme = useTheme();
 
   return (
