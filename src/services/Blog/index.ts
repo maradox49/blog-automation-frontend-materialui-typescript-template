@@ -35,6 +35,34 @@ export const getAllBlogsService = async (username: string, password: string, pag
     }
 }
 
+export const getOneBlogService = async (username: string, password: string, id: string) => {
+    try {
+        const url = `${config.sourceBlogUrl}/posts/${id}`;
+
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                id: data.id,
+                date: data.date,
+                slug: data.slug,
+                status: data.status,
+                title: data.title.rendered,
+                content: data.content.rendered,
+                number: 0
+            };
+        }
+        return null;
+    } catch (error) {
+        return null;
+    }
+}
+
 export const getBlogStatusService = async (postIds: string[]) => {
     try {
         const url = `${config.baseUrl}/history/filter`;

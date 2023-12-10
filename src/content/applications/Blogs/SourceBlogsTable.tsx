@@ -541,7 +541,7 @@ const RecentOrdersTable = () => {
         <Stack direction="row" justifyContent={"space-between"}>
           <Box>
             {selectedBulkActions && (
-              <BulkActions />
+              <BulkActions selected={selectedBlogTypes} />
             )}
           </Box>
           <TablePagination

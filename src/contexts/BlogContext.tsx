@@ -3,7 +3,7 @@ import { loginService } from 'src/services/Auth/Auth';
 import { LoadingContext } from './LoadingContext';
 import { BlogStatusType, BlogType } from 'src/models/blog';
 import { UserContext } from './UserContext';
-import { getAllBlogsService, getBlogStatusService, sendBlogService, sendBlogStatus, translateBlogService } from 'src/services/Blog';
+import { getAllBlogsService, getBlogStatusService, getOneBlogService, sendBlogService, sendBlogStatus, translateBlogService } from 'src/services/Blog';
 import { LanguageContext } from './LanguageContext';
 type BlogContext = {
   blogs: BlogType[],
@@ -12,7 +12,8 @@ type BlogContext = {
   blogStatus: BlogStatusType[][]
   search: string,
   updateSearch: (string) => void,
-  translate: (index, language) => void
+  translate: (index, language) => void,
+  translateAll: (blogIds) => void
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -39,10 +40,9 @@ export const BlogProvider: FC = ({ children }) => {
     setSearch(_search);
   }
 
-  const translate = async (index: number, languageName: string) => {
-    startLoading("Translating...")
-    const responseTranslate = await translateBlogService(blogs[index], languageName);
-    console.log(responseTranslate)
+  const translateBlog = async ( blog: BlogType, languageName: string ) => {
+    startLoading(`Translating #${blog.id} into ${languageName}...`)
+    const responseTranslate = await translateBlogService( blog, languageName);
     stopLoading()
     if (responseTranslate) {
       if ( responseTranslate.title === "error" ) return ;
@@ -50,7 +50,7 @@ export const BlogProvider: FC = ({ children }) => {
       if (!language) return;
       startLoading("Sending...")
       const responseSent = await sendBlogService({
-        ...blogs[index],
+        ...blog,
         content: responseTranslate.content,
         title: responseTranslate.title
       }, language);
@@ -58,10 +58,11 @@ export const BlogProvider: FC = ({ children }) => {
       stopLoading();
       if (responseSent) {
         startLoading("Updating Status...")
-        const responseStatusUpdate = await sendBlogStatus(blogs[index].id, languageName, responseSent.id);
+        const responseStatusUpdate = await sendBlogStatus(blog.id, languageName, responseSent.id);
         console.log(responseStatusUpdate)
         stopLoading();
         if (responseStatusUpdate) {
+          const index = blogs.findIndex(_blog=>(_blog.id===blog.id));
           setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
             if (blogOneStatus.language === languageName && rowIndex === index) {
               blogOneStatus.sent = true;
@@ -72,6 +73,28 @@ export const BlogProvider: FC = ({ children }) => {
         }
       }
     }
+  }
+
+  const translateAll = async ( blogIds: string[] ) => {
+    startLoading("Loading automation status...");
+    const selectedBlogStatus = await getBlogStatusService(blogIds);
+    stopLoading();
+    for ( let i = 0 ; i < blogIds.length ; i ++ ) {
+      if ( !selectedBlogStatus[i].find(status=>(status.sent===false)) ) continue;
+      startLoading(`Loading blog #${blogIds[i]}`);
+      const blog = await getOneBlogService(username, password, blogIds[i]);
+      stopLoading();
+      for ( let j = 0 ; j < selectedBlogStatus[i].length; j ++ ) {
+        const status: BlogStatusType = selectedBlogStatus[i][j];
+        if ( !status.sent ) {
+          await translateBlog(blog, status.language);
+        }
+      }
+    }
+  }
+
+  const translate = async (index: number, languageName: string) => {
+    await translateBlog(blogs[index], languageName);
   }
 
   const loadBlogs = async (page: number = 1, pageCount: number = 5, search: string = "") => {
@@ -98,7 +121,7 @@ export const BlogProvider: FC = ({ children }) => {
 
   return (
     <BlogContext.Provider
-      value={{ blogs, blogCount, loadBlogs, search, updateSearch, blogStatus, translate }}
+      value={{ blogs, blogCount, loadBlogs, search, updateSearch, blogStatus, translate, translateAll }}
     >
       {children}
     </BlogContext.Provider>
