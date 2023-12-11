@@ -102,7 +102,7 @@ function SimpleDialog(props) {
           bottom: "30px",
           right: "27px"
         }}
-        ><img src="/static/images/languages/vector.png" width={"35px"} /></Box>
+        ><img src="/static/images/languages/vector2.png" width={"35px"} /></Box>
         <Box sx={{
           position: "absolute",
           top: "35px",
