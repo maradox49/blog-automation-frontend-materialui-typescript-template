@@ -214,7 +214,7 @@ function SimpleDialog(props) {
                             color='primary'>
                             View
                           </Button>
-
+                          <Box height={2}/>
                           <Button
                             onClick={() => handleReset(detail.language, detail.targetId)}
                             endIcon={<Link />}
@@ -224,6 +224,7 @@ function SimpleDialog(props) {
                             Reset
                           </Button>
 
+                          <Box height={2}/>
                           <Button
                             onClick={() => handleResend(detail.language, detail.targetId)}
                             endIcon={<Link />}
