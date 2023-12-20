@@ -14,7 +14,7 @@ type BlogContext = {
   updateSearch: (string) => void,
   translate: (index, language) => void,
   translateAll: (blogIds) => void,
-  resetBlog: ( index, languageName, targetId ) => void
+  resetBlog: (index, languageName, targetId) => void
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -41,12 +41,12 @@ export const BlogProvider: FC = ({ children }) => {
     setSearch(_search);
   }
 
-  const translateBlog = async ( blog: BlogType, languageName: string ) => {
+  const translateBlog = async (blog: BlogType, languageName: string) => {
     startLoading(`Translating #${blog.id} into ${languageName}...`)
-    const responseTranslate = await translateBlogService( blog, languageName);
+    const responseTranslate = await translateBlogService(blog, languageName);
     stopLoading()
     if (responseTranslate) {
-      if ( responseTranslate.title === "error" ) return ;
+      if (responseTranslate.title === "error") return;
       const language = languages.find(value => (value.name === languageName));
       if (!language) return;
       startLoading("Sending...")
@@ -63,7 +63,7 @@ export const BlogProvider: FC = ({ children }) => {
         console.log(responseStatusUpdate)
         stopLoading();
         if (responseStatusUpdate) {
-          const index = blogs.findIndex(_blog=>(_blog.id===blog.id));
+          const index = blogs.findIndex(_blog => (_blog.id === blog.id));
           setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
             if (blogOneStatus.language === languageName && rowIndex === index) {
               blogOneStatus.sent = true;
@@ -76,18 +76,18 @@ export const BlogProvider: FC = ({ children }) => {
     }
   }
 
-  const translateAll = async ( blogIds: string[] ) => {
+  const translateAll = async (blogIds: string[]) => {
     startLoading("Loading automation status...");
     const selectedBlogStatus = await getBlogStatusService(blogIds);
     stopLoading();
-    for ( let i = 0 ; i < blogIds.length ; i ++ ) {
-      if ( !selectedBlogStatus[i].find(status=>(status.sent===false)) ) continue;
+    for (let i = 0; i < blogIds.length; i++) {
+      if (!selectedBlogStatus[i].find(status => (status.sent === false))) continue;
       startLoading(`Loading blog #${blogIds[i]}`);
       const blog = await getOneBlogService(username, password, blogIds[i]);
       stopLoading();
-      for ( let j = 0 ; j < selectedBlogStatus[i].length; j ++ ) {
+      for (let j = 0; j < selectedBlogStatus[i].length; j++) {
         const status: BlogStatusType = selectedBlogStatus[i][j];
-        if ( !status.sent ) {
+        if (!status.sent) {
           await translateBlog(blog, status.language);
         }
       }
@@ -98,28 +98,26 @@ export const BlogProvider: FC = ({ children }) => {
     await translateBlog(blogs[index], languageName);
   }
 
-  const resetBlog = async ( index: number, languageName: string, targetId: string ) => {
+  const resetBlog = async (index: number, languageName: string, targetId: string) => {
     const language = languages.find(value => (value.name === languageName));
-    if ( !language ) return;
+    if (!language) return;
     const blog = blogs[index];
     const url = language.url + "/wp-json/wp/v2/posts/" + targetId;
 
     startLoading(`Deleting #${blog.id} in target-${languageName}`);
-    const response = await deleteBlogService(language.username, language.password, url );
+    const response = await deleteBlogService(language.username, language.password, url);
     stopLoading();
-    if ( response ) {
-        startLoading("Updating Status...")
-        const responseStatusUpdate = await deleteBlogStatus(blog.id, languageName, targetId);
-        stopLoading();
-        if (responseStatusUpdate) {
-          setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
-            if (blogOneStatus.language === languageName && rowIndex === index) {
-              blogOneStatus.sent = false;
-              blogOneStatus.targetId = "-1";
-            }
-            return blogOneStatus;
-          }))))
+    startLoading("Updating Status...")
+    const responseStatusUpdate = await deleteBlogStatus(blog.id, languageName, targetId);
+    stopLoading();
+    if (responseStatusUpdate) {
+      setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
+        if (blogOneStatus.language === languageName && rowIndex === index) {
+          blogOneStatus.sent = false;
+          blogOneStatus.targetId = "-1";
         }
+        return blogOneStatus;
+      }))))
     }
   }
 
