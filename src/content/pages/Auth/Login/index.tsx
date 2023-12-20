@@ -146,7 +146,7 @@ function Login() {
                 </Grid>
                 <Grid item md={7} sm={12}>
                     <Box sx={{ background: theme.colors.alpha.black["5"] }} display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
-                        <Stack spacing={2} width={500}>
+                        <Stack spacing={2} width={500} maxWidth={"90%"}>
                             <OutlinedInput
                                 fullWidth
                                 sx={{

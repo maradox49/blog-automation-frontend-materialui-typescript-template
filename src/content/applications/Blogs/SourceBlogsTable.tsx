@@ -28,6 +28,7 @@ import { BlogContext } from 'src/contexts/BlogContext';
 import { UserContext } from 'src/contexts/UserContext';
 import { LanguageContext } from 'src/contexts/LanguageContext';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
+import { deleteBlogService } from 'src/services/Blog';
 
 interface SourceBlogsTable {
   className?: string;
@@ -105,7 +106,7 @@ function SimpleDialog(props) {
   const { onClose, selectedValue, open, status, statusId } = props;
   const theme = useTheme()
   const { languages } = useContext(LanguageContext);
-  const { translate } = useContext(BlogContext);
+  const { translate, resetBlog } = useContext(BlogContext);
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -127,6 +128,17 @@ function SimpleDialog(props) {
       return url + `?p=${targetId}`;
     }
     return "";
+  }
+
+  const handleReset = async (language: string, targetId: string) => {
+    onClose("")
+    resetBlog(statusId, language, targetId);
+  }
+
+  const handleResend = async (language: string, targetId: string ) => {
+    onClose("")
+    await resetBlog(statusId, language, targetId);
+    await translate(statusId, language);
   }
 
   const viewTargetBlog = (url: string) => {
@@ -201,6 +213,24 @@ function SimpleDialog(props) {
                             variant='contained'
                             color='primary'>
                             View
+                          </Button>
+
+                          <Button
+                            onClick={() => handleReset(detail.language, detail.targetId)}
+                            endIcon={<Link />}
+                            fullWidth
+                            variant='contained'
+                            color='primary'>
+                            Reset
+                          </Button>
+
+                          <Button
+                            onClick={() => handleResend(detail.language, detail.targetId)}
+                            endIcon={<Link />}
+                            fullWidth
+                            variant='contained'
+                            color='primary'>
+                            Resend
                           </Button>
                         </Grid> :
                         <Grid item sm={7}>
@@ -333,16 +363,16 @@ const RecentOrdersTable = () => {
   const handleSelectAllBlogTypes = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    if ( event.target.checked ) {
+    if (event.target.checked) {
       const prevSelected = [...selectedBlogTypes];
-      for ( let i = 0 ; i < blogs.length ; i ++ ) {
-        if ( !selectedBlogTypes.find(blogId=>(blogId===blogs[i].id)) ) {
+      for (let i = 0; i < blogs.length; i++) {
+        if (!selectedBlogTypes.find(blogId => (blogId === blogs[i].id))) {
           prevSelected.push(blogs[i].id);
         }
       }
       setSelectedBlogTypes(prevSelected);
     } else {
-      setSelectedBlogTypes(selectedBlogTypes.filter(blogId=>(!blogs.find(blog=>(blog.id===blogId)))));
+      setSelectedBlogTypes(selectedBlogTypes.filter(blogId => (!blogs.find(blog => (blog.id === blogId)))));
     }
   };
 
@@ -377,10 +407,10 @@ const RecentOrdersTable = () => {
     limit
   );
   const selectedSomeBlogTypes =
-    selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length > 0 &&
-    selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length < blogs.length;
+    selectedBlogTypes.filter(blogId => (blogs.find(blog => (blog.id === blogId)))).length > 0 &&
+    selectedBlogTypes.filter(blogId => (blogs.find(blog => (blog.id === blogId)))).length < blogs.length;
   const selectedAllBlogTypes =
-  selectedBlogTypes.filter(blogId=>(blogs.find(blog=>(blog.id===blogId)))).length === blogs.length;
+    selectedBlogTypes.filter(blogId => (blogs.find(blog => (blog.id === blogId)))).length === blogs.length;
   const theme = useTheme();
 
   return (

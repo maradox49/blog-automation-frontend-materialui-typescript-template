@@ -63,6 +63,24 @@ export const getOneBlogService = async (username: string, password: string, id: 
     }
 }
 
+export const deleteBlogService = async (username: string, password: string, url: string) => {
+    try {
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+            }
+        });
+
+        if (response.ok) {
+            return "success";
+        }
+        return null;
+    } catch (error) {
+        return null;
+    }
+}
+
 export const getBlogStatusService = async (postIds: string[]) => {
     try {
         const url = `${config.baseUrl}/history/filter`;
@@ -150,6 +168,43 @@ export const sendBlogStatus = async (postId: string, language: string, targetId:
             const data = await response.json();
             console.log(data);
             return data;
+        }
+    } catch (error) {
+        console.log(error)
+    }
+} 
+
+export const updateBlogStatus = async (statusId: string, postId: string, language: string, targetId: string) => {
+    try {
+        const url = `${config.baseUrl}/history/${statusId}`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-type': "application/json"
+            },
+            body: JSON.stringify({
+                postId: postId,
+                language: language,
+                targetId: targetId
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+    } catch (error) {
+        console.log(error)
+    }
+} 
+export const deleteBlogStatus = async (postId: string, language: string, targetId: string) => {
+    try {
+        const url = `${config.baseUrl}/history/?postId=${postId}&language=${language}&targetId=${targetId}`;
+        const response = await fetch(url, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            return "Success";
         }
     } catch (error) {
         console.log(error)

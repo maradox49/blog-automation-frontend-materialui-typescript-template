@@ -3,7 +3,7 @@ import { loginService } from 'src/services/Auth/Auth';
 import { LoadingContext } from './LoadingContext';
 import { BlogStatusType, BlogType } from 'src/models/blog';
 import { UserContext } from './UserContext';
-import { getAllBlogsService, getBlogStatusService, getOneBlogService, sendBlogService, sendBlogStatus, translateBlogService } from 'src/services/Blog';
+import { deleteBlogService, deleteBlogStatus, getAllBlogsService, getBlogStatusService, getOneBlogService, sendBlogService, sendBlogStatus, translateBlogService } from 'src/services/Blog';
 import { LanguageContext } from './LanguageContext';
 type BlogContext = {
   blogs: BlogType[],
@@ -13,7 +13,8 @@ type BlogContext = {
   search: string,
   updateSearch: (string) => void,
   translate: (index, language) => void,
-  translateAll: (blogIds) => void
+  translateAll: (blogIds) => void,
+  resetBlog: ( index, languageName, targetId ) => void
 };
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -97,6 +98,31 @@ export const BlogProvider: FC = ({ children }) => {
     await translateBlog(blogs[index], languageName);
   }
 
+  const resetBlog = async ( index: number, languageName: string, targetId: string ) => {
+    const language = languages.find(value => (value.name === languageName));
+    if ( !language ) return;
+    const blog = blogs[index];
+    const url = language.url + "/wp-json/wp/v2/posts/" + targetId;
+
+    startLoading(`Deleting #${blog.id} in target-${languageName}`);
+    const response = await deleteBlogService(language.username, language.password, url );
+    stopLoading();
+    if ( response ) {
+        startLoading("Updating Status...")
+        const responseStatusUpdate = await deleteBlogStatus(blog.id, languageName, targetId);
+        stopLoading();
+        if (responseStatusUpdate) {
+          setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
+            if (blogOneStatus.language === languageName && rowIndex === index) {
+              blogOneStatus.sent = false;
+              blogOneStatus.targetId = "-1";
+            }
+            return blogOneStatus;
+          }))))
+        }
+    }
+  }
+
   const loadBlogs = async (page: number = 1, pageCount: number = 5, search: string = "") => {
     if (isLoading) return;
     startLoading("Loading Blogs...")
@@ -121,7 +147,7 @@ export const BlogProvider: FC = ({ children }) => {
 
   return (
     <BlogContext.Provider
-      value={{ blogs, blogCount, loadBlogs, search, updateSearch, blogStatus, translate, translateAll }}
+      value={{ blogs, blogCount, loadBlogs, search, updateSearch, blogStatus, translate, translateAll, resetBlog }}
     >
       {children}
     </BlogContext.Provider>
