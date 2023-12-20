@@ -30,7 +30,7 @@ function StatusMaintenance() {
   return (
     <>
       <Helmet>
-        <title>Status - Maintenance</title>
+        <title>Blog automation</title>
       </Helmet>
       <MainContent>
         <Container maxWidth="md">

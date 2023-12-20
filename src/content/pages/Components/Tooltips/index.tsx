@@ -18,7 +18,7 @@ function Tooltips() {
   return (
     <>
       <Helmet>
-        <title>Tooltips - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

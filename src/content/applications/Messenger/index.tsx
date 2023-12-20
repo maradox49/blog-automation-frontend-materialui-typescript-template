@@ -84,7 +84,7 @@ function ApplicationsMessenger() {
   return (
     <>
       <Helmet>
-        <title>Messenger - Applications</title>
+        <title>Blog automation</title>
       </Helmet>
       <RootWrapper className="Mui-FixedWrapper">
         <DrawerWrapperMobile

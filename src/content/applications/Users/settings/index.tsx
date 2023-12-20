@@ -36,7 +36,7 @@ function ManagementUserSettings() {
   return (
     <>
       <Helmet>
-        <title>User Settings - Applications</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />

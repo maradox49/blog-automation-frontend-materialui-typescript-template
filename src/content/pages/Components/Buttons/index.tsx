@@ -19,7 +19,7 @@ function Buttons() {
   return (
     <>
       <Helmet>
-        <title>Buttons - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

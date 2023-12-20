@@ -62,7 +62,7 @@ function Cards() {
   return (
     <>
       <Helmet>
-        <title>Cards - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

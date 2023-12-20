@@ -52,7 +52,7 @@ function Status500() {
   return (
     <>
       <Helmet>
-        <title>Status - 500</title>
+        <title>Blog automation</title>
       </Helmet>
       <MainContent>
         <Grid

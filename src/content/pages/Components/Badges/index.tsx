@@ -42,7 +42,7 @@ function Badges() {
   return (
     <>
       <Helmet>
-        <title>Badges - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

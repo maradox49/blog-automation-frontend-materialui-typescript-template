@@ -21,7 +21,7 @@ function Accordions() {
   return (
     <>
       <Helmet>
-        <title>Accordions - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

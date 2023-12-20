@@ -26,7 +26,7 @@ function ManagementUserProfile() {
   return (
     <>
       <Helmet>
-        <title>User Details - Management</title>
+        <title>Blog automation</title>
       </Helmet>
       <Container sx={{ mt: 3 }} maxWidth="lg">
         <Grid

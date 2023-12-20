@@ -97,7 +97,7 @@ function Modals() {
   return (
     <>
       <Helmet>
-        <title>Modals - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

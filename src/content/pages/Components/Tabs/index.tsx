@@ -60,7 +60,7 @@ function TabsDemo() {
   return (
     <>
       <Helmet>
-        <title>Tabs - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

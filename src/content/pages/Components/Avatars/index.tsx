@@ -50,7 +50,7 @@ function Avatars() {
   return (
     <>
       <Helmet>
-        <title>Avatars - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

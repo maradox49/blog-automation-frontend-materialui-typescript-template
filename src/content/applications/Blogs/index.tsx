@@ -8,7 +8,7 @@ function ApplicationsTransactions() {
   return (
     <>
       <Helmet>
-        <title>Blog automation platform</title>
+        <title>Blog automation</title>
       </Helmet>
       <Stack spacing={4} padding={4} marginTop={5}>
         <Box height={55}>

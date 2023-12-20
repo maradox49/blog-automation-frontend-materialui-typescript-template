@@ -69,7 +69,7 @@ function Forms() {
   return (
     <>
       <Helmet>
-        <title>Forms - Components</title>
+        <title>Blog automation</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle

@@ -100,7 +100,7 @@ function StatusComingSoon() {
   return (
     <>
       <Helmet>
-        <title>Status - Coming Soon</title>
+        <title>Blog automation</title>
       </Helmet>
       <MainContent>
         <Container maxWidth="md">
