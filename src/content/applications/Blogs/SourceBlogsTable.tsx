@@ -29,6 +29,7 @@ import { UserContext } from 'src/contexts/UserContext';
 import { LanguageContext } from 'src/contexts/LanguageContext';
 import { DictionaryContext } from 'src/contexts/DictionaryContext';
 import { deleteBlogService } from 'src/services/Blog';
+import Config from 'src/config/Global';
 
 interface SourceBlogsTable {
   className?: string;
@@ -135,7 +136,7 @@ function SimpleDialog(props) {
     resetBlog(statusId, language, targetId);
   }
 
-  const handleResend = async (language: string, targetId: string ) => {
+  const handleResend = async (language: string, targetId: string) => {
     onClose("")
     await resetBlog(statusId, language, targetId);
     await translate(statusId, language);
@@ -214,7 +215,7 @@ function SimpleDialog(props) {
                             color='primary'>
                             View
                           </Button>
-                          <Box height={2}/>
+                          <Box height={2} />
                           <Button
                             onClick={() => handleReset(detail.language, detail.targetId)}
                             endIcon={<Link />}
@@ -224,7 +225,7 @@ function SimpleDialog(props) {
                             Reset
                           </Button>
 
-                          <Box height={2}/>
+                          <Box height={2} />
                           <Button
                             onClick={() => handleResend(detail.language, detail.targetId)}
                             endIcon={<Link />}
@@ -393,6 +394,10 @@ const RecentOrdersTable = () => {
     }
   };
 
+  const viewSourceBlog = (id: string) => {
+    window.open(Config.sourcePostUrl + id, "_blank");
+  }
+
   const handlePageChange = (event: any, newPage: number): void => {
     setPage(newPage);
   };
@@ -488,7 +493,11 @@ const RecentOrdersTable = () => {
                       value={isBlogTypeSelected}
                     />
                   </TableCellItem>
-                  <TableCellItem>
+                  <TableCellItem
+
+                    onClick={() => viewSourceBlog(blog.id)}
+                    sx={{ cursor: "pointer", textDecoration: "underline" }}
+                  >
                     <Typography
                       variant="body2"
                       gutterBottom
