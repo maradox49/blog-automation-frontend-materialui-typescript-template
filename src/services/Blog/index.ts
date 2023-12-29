@@ -127,7 +127,7 @@ export const translateBlogService = async (blog: BlogType, language: string) => 
     }
 }
 
-export const sendBlogService = async (blog: BlogType, language: LanguageType) => {
+export const sendBlogService = async (blog: BlogType, mediaId: number, language: LanguageType) => {
     try {
         const response = await fetch(language.url + "/wp-json/wp/v2/posts", {
             method: 'POST',
@@ -139,7 +139,8 @@ export const sendBlogService = async (blog: BlogType, language: LanguageType) =>
                 title: blog.title,
                 content: blog.content,
                 date: blog.date,
-                status: blog.status
+                status: blog.status,
+                featured_media: mediaId
             })
         });
         if (response.ok) {
@@ -149,6 +150,36 @@ export const sendBlogService = async (blog: BlogType, language: LanguageType) =>
         }
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const uploadFeaturedMediaService = async (mediaUrl: string, title: string, language: LanguageType) => {
+    try {
+
+        const uploadUrl = language.url + "/wp-json/wp/v2/media";
+
+        // Fetch the image from the original URL
+        const fetchedData = await fetch(mediaUrl);
+        const imageBlob = await fetchedData.blob();
+        const formData = new FormData();
+        formData.append('file', imageBlob, title + ".png");
+
+        // Make a POST request to upload the image to the server
+        const responseData = await fetch(uploadUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${language.username}:${language.password}`)
+            },
+        });
+        const data = await responseData.json();
+
+        return {
+            status: true,
+            mediaId: data.id
+        }
+    } catch(error) {
+        return null;
     }
 }
 
@@ -174,7 +205,7 @@ export const sendBlogStatus = async (postId: string, language: string, targetId:
     } catch (error) {
         console.log(error)
     }
-} 
+}
 
 export const updateBlogStatus = async (statusId: string, postId: string, language: string, targetId: string) => {
     try {
@@ -198,7 +229,7 @@ export const updateBlogStatus = async (statusId: string, postId: string, languag
     } catch (error) {
         console.log(error)
     }
-} 
+}
 export const deleteBlogStatus = async (postId: string, language: string, targetId: string) => {
     try {
         const url = `${config.baseUrl}/history/?postId=${postId}&language=${language}&targetId=${targetId}`;

@@ -3,7 +3,17 @@ import { loginService } from 'src/services/Auth/Auth';
 import { LoadingContext } from './LoadingContext';
 import { BlogStatusType, BlogType } from 'src/models/blog';
 import { UserContext } from './UserContext';
-import { deleteBlogService, deleteBlogStatus, getAllBlogsService, getBlogStatusService, getOneBlogService, sendBlogService, sendBlogStatus, translateBlogService } from 'src/services/Blog';
+import {
+  deleteBlogService,
+  deleteBlogStatus,
+  getAllBlogsService,
+  getBlogStatusService,
+  getOneBlogService,
+  sendBlogService,
+  sendBlogStatus,
+  translateBlogService,
+  uploadFeaturedMediaService
+} from 'src/services/Blog';
 import { LanguageContext } from './LanguageContext';
 type BlogContext = {
   blogs: BlogType[],
@@ -45,35 +55,40 @@ export const BlogProvider: FC = ({ children }) => {
     startLoading(`Translating #${blog.id} into ${languageName}...`)
     const responseTranslate = await translateBlogService(blog, languageName);
     stopLoading()
-    if (responseTranslate) {
-      if (responseTranslate.title === "error") return;
-      const language = languages.find(value => (value.name === languageName));
-      if (!language) return;
-      startLoading("Sending...")
-      const responseSent = await sendBlogService({
-        ...blog,
-        content: responseTranslate.content,
-        title: responseTranslate.title
-      }, language);
-      console.log(responseSent)
-      stopLoading();
-      if (responseSent) {
-        startLoading("Updating Status...")
-        const responseStatusUpdate = await sendBlogStatus(blog.id, languageName, responseSent.id);
-        console.log(responseStatusUpdate)
-        stopLoading();
-        if (responseStatusUpdate) {
-          const index = blogs.findIndex(_blog => (_blog.id === blog.id));
-          setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
-            if (blogOneStatus.language === languageName && rowIndex === index) {
-              blogOneStatus.sent = true;
-              blogOneStatus.targetId = responseSent.id;
-            }
-            return blogOneStatus;
-          }))))
-        }
+    if (!responseTranslate) return;
+    if (responseTranslate.title === "error") return;
+    // const responseTranslate = {
+    //   title: "hello",
+    //   content: "world"
+    // }
+    const language = languages.find(value => (value.name === languageName));
+    if (!language) return;
+    startLoading("Uploading a media...")
+    const uploadMediaResponse = await uploadFeaturedMediaService(blog.media, responseTranslate.title, language);
+    console.log(uploadMediaResponse);
+    stopLoading();
+    if (!uploadMediaResponse) return;
+    startLoading("Posting a blog...")
+    const responseSent = await sendBlogService({
+      ...blog,
+      content: responseTranslate.content,
+      title: responseTranslate.title
+    }, uploadMediaResponse.mediaId, language);
+    stopLoading();
+    if (!responseSent) return;
+    startLoading("Updating Status...")
+    const responseStatusUpdate = await sendBlogStatus(blog.id, languageName, responseSent.id);
+    console.log(responseStatusUpdate)
+    stopLoading();
+    if (!responseStatusUpdate) return;
+    const index = blogs.findIndex(_blog => (_blog.id === blog.id));
+    setBlogStatus(blogStatus.map((blogArr, rowIndex) => (blogArr.map(blogOneStatus => {
+      if (blogOneStatus.language === languageName && rowIndex === index) {
+        blogOneStatus.sent = true;
+        blogOneStatus.targetId = responseSent.id;
       }
-    }
+      return blogOneStatus;
+    }))))
   }
 
   const translateAll = async (blogIds: string[]) => {
