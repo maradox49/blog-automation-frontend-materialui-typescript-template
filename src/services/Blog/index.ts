@@ -5,7 +5,7 @@ import { LanguageType } from "src/models/language";
 
 export const getAllBlogsService = async (username: string, password: string, page: number = 1, pageCount: number = 5, search: string = "") => {
     try {
-        const url = `${config.sourceBlogUrl}/posts?page=${page}&per_page=${pageCount}&search=${search}&search_columns=post_title`;
+        const url = `${config.sourceBlogUrl}/posts?page=${page}&per_page=${pageCount}&search=${search}&search_columns=post_title&_embed`;
 
         const response = await fetch(url, {
             headers: {
@@ -24,6 +24,7 @@ export const getAllBlogsService = async (username: string, password: string, pag
                     status: blog.status,
                     title: blog.title.rendered,
                     content: blog.content.rendered,
+                    media: "https://www.singlequiver.com/enelpico/wp-content/uploads/" + blog["_embedded"]["wp:featuredmedia"][0]["media_details"]["file"],
                     number: 0
                 })),
                 count: count ? parseInt(count) : 0
@@ -54,6 +55,7 @@ export const getOneBlogService = async (username: string, password: string, id: 
                 status: data.status,
                 title: data.title.rendered,
                 content: data.content.rendered,
+                media: "https://www.singlequiver.com/enelpico/wp-content/uploads/" + data["_embedded"]["wp:featuredmedia"][0]["media_details"]["file"],
                 number: 0
             };
         }

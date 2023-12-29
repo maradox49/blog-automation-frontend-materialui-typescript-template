@@ -8,6 +8,7 @@ export interface BlogType {
   title: string;
   number: number;
   content: string;
+  media: string;
 }
 
 export interface BlogStatusType {
