@@ -38,7 +38,7 @@ export const getAllBlogsService = async (username: string, password: string, pag
 
 export const getOneBlogService = async (username: string, password: string, id: string) => {
     try {
-        const url = `${config.sourceBlogUrl}/posts/${id}`;
+        const url = `${config.sourceBlogUrl}/posts/${id}?_embed`;
 
         const response = await fetch(url, {
             headers: {
@@ -58,10 +58,10 @@ export const getOneBlogService = async (username: string, password: string, id: 
                 media: "https://www.singlequiver.com/enelpico/wp-content/uploads/" + data["_embedded"]["wp:featuredmedia"][0]["media_details"]["file"],
                 number: 0
             };
-        }
-        return null;
+        } else 
+            return null;
     } catch (error) {
-        return null;
+        return error;
     }
 }
 
