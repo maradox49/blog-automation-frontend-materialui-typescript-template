@@ -67,7 +67,7 @@ export const BlogProvider: FC = ({ children }) => {
     const uploadMediaResponse = await uploadFeaturedMediaService(blog.media, responseTranslate.title, language);
     console.log(uploadMediaResponse);
     stopLoading();
-    if (!uploadMediaResponse) return;
+    // if (!uploadMediaResponse) return;
     startLoading("Posting a blog...")
     const responseSent = await sendBlogService({
       ...blog,
