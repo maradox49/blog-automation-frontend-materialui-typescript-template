@@ -73,7 +73,7 @@ export const BlogProvider: FC = ({ children }) => {
       ...blog,
       content: responseTranslate.content,
       title: responseTranslate.title
-    }, uploadMediaResponse.mediaId, language);
+    }, uploadMediaResponse?.mediaId??-1, language);
     stopLoading();
     if (!responseSent) return;
     startLoading("Updating Status...")
